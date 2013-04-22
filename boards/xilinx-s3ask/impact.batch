@@ -1,6 +1,0 @@
-setMode -bs
-setCable -port auto
-identify
-assignFile -p 1 -file system.bit
-Program -p 1 -onlyFpga
-quit
