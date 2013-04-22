@@ -123,6 +123,11 @@ usage: system-routed.xdl
 jtag: system.bit
 	djtgcfg prog -f $< -d Nexys3 -i 0
 
+##################################################################
+# Download
+
+load:
+	impact -batch impact_script
 ####################################################################
 # final targets
 
