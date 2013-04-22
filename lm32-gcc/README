@@ -1,4 +1,4 @@
 
 
 Vous pourriez avoir des problèmes avec l'installation. J'ai eu une erreur à la compilation sur un outil attaché à gcc.
-Il appelait la fonction memset et me mettez une erreur. Il suffisait d'aller à l'endroit de l'erreur et de changer "sizeof(statvar)" par "sizeof(struct stat)"
+Il appelait la fonction memset et me mettait une erreur. Il suffisait d'aller à l'endroit de l'erreur et de changer "sizeof(statvar)" par "sizeof(struct stat)"
