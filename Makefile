@@ -2,7 +2,7 @@
 SERIAL=/dev/ttyUSB0
 
 
-bios:
+firmware:
 	make -C firmware/insa_firmware/
 
 tool:
