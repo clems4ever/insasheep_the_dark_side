@@ -37,6 +37,7 @@ int main(int argc, char **argv)
     			for (p = (int8_t *) start; p < (int8_t *) (start+size); p++) {
     				*p = uart_getchar();
     			}
+				uart_putstr("Uploading completed\n");
     			break;
 			case 'd': // download
     			start = read_uint32();
@@ -47,6 +48,7 @@ int main(int argc, char **argv)
     			break;
     		case 'g': // goto
     			start = read_uint32();
+				uart_putstr("Jump!\n");
     			jump(start);
     			break;   
 			default:

@@ -1,60 +1,84 @@
-/**
- * Memory dumper
- */
 #include "soc-hw.h"
 
-#define     TEST_SIZE           0x1000
-#define     TEST_STARTADDRESS   0x40000000
-
-//#define     TEST_SIZE           0x500
-//#define     TEST_STARTADDRESS   0x500
 
 const char hexchars[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
+
 void putHex(uint32_t i)
 {
-    uart_putchar(hexchars[(i >> 28) & 0x0F]);
-    uart_putchar(hexchars[(i >> 24) & 0x0F]);
-    uart_putchar(hexchars[(i >> 20) & 0x0F]);
-    uart_putchar(hexchars[(i >> 16) & 0x0F]);
-    uart_putchar(hexchars[(i >> 12) & 0x0F]);
-    uart_putchar(hexchars[(i >> 8) & 0x0F]);
-    uart_putchar(hexchars[(i >> 4) & 0x0F]);
-    uart_putchar(hexchars[i & 0x0F]);
+		uart_putchar(hexchars[(i >> 28) & 0x0F]);
+		uart_putchar(hexchars[(i >> 24) & 0x0F]);
+		uart_putchar(hexchars[(i >> 20) & 0x0F]);
+		uart_putchar(hexchars[(i >> 16) & 0x0F]);
+		uart_putchar(hexchars[(i >> 12) & 0x0F]);
+		uart_putchar(hexchars[(i >> 8) & 0x0F]);
+		uart_putchar(hexchars[(i >> 4) & 0x0F]);
+		uart_putchar(hexchars[i & 0x0F]);
 }
+
+void putHChar(uint8_t i){
+		uart_putchar(hexchars[(i >> 4) & 0x0F]);
+		uart_putchar(hexchars[i & 0x0F]);
+}
+
+
 
 int main(int argc, char **argv)
 {
-    uint32_t pattern = 0x13370000;
+	
+		int bios_size, i;
+		int start_address;
 
-    // Initialize UART
-    uart_init();
+		uart_init();
 
-    uart_putstr("Dumping memory...\r\n");
-    uint32_t* q = (uint32_t*)TEST_STARTADDRESS;
-    for(int i = 0; i < TEST_SIZE/4; i++)
-    {   
-        putHex(*q);
-        q++;
-        uart_putstr("\r\n");
-    }
+		uart_putstr("INSoC bootstrap...\r\n");
+		uart_putstr("Waiting for the bootloader, load it through the serial port\r\n\n");
 
-    uart_putstr("Writing memory...\r\n");
-    q = (uint32_t*)TEST_STARTADDRESS;
-    for(int i = 0; i < TEST_SIZE/4; i++)
-    {   
-        *q = pattern++;
-        q++;
-    }
+		uart_putstr("Waiting for the address where the bootloader will be loaded\r\n");
+		// Waits for the user to write the 
+		start_address = 0;
+		for(i=0; i<4; i++){
 
-    uart_putstr("Dumping memory...\r\n");
-    q = (uint32_t*)TEST_STARTADDRESS;
-    for(int i = 0; i < TEST_SIZE/4; i++)
-    {   
-        putHex(*q);
-        q++;
-        uart_putstr("\r\n");
-    }
+				start_address <<= 8;
+				start_address += (char) uart_getchar();
+		}
+		uart_putstr("The bootloader will be at 0x");
+		putHex(start_address);
+		uart_putstr("\r\n");
 
-    uart_putstr("\r\ndone!\r\n");
+
+		// Waits for the user to write the BIOS size on UART
+		uart_putstr("Waiting for the bootloader size\r\n");
+		bios_size = 0;
+		for(i=0; i<4; i++){
+
+				bios_size <<= 8;
+				bios_size += (char) uart_getchar();
+		}
+		uart_putstr("The bootloader size is ");
+		putHex(bios_size);
+		uart_putstr("\r\n");
+
+		// Copy bios to RAM
+		char *destination;
+		destination = (char*)start_address;
+
+		uart_putstr("Waiting for the bootloader binary\r\n");
+		for(i=0; i<bios_size; i++){
+				*destination = uart_getchar();
+				destination++;
+		}
+
+		// dump BIOS (debug)
+		/*destination = (char *) start_address;
+		for(i=0; i<bios_size; i++){
+				putHChar(*destination);
+				destination++;
+		}*/
+
+		uart_putstr("\r\nJumping to bootloader...\r\n\n");
+		// Jumps to the bootloader
+		jump(start_address);
+
+		return 0;
 }

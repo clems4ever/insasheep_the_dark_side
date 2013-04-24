@@ -105,4 +105,7 @@ extern uart_t   *uart0;
 extern gpio_t   *gpio0; 
 extern uint32_t *sram0; 
 
+
+//void memcpy(char *destination, char *source, int bytes);
+
 #endif // SPIKEHW_H

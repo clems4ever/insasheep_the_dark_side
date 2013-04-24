@@ -47,9 +47,11 @@ void uart_init()
 }
 
 char uart_getchar()
-{   
+{  
+	int c;
 	while (! (uart0->ucr & UART_DR)) ;
-	return uart0->rxtx;
+	c = uart0->rxtx;
+	return c;
 }
 
 void uart_putchar(char c)
@@ -66,4 +68,16 @@ void uart_putstr(char *str)
 		c++;
 	}
 }
+
+
+
+/*void memcpy(char *destination, char *source, int bytes){
+	int i;
+	for(i=0; i<bytes; i++){
+		*destination = *source;
+		destination++;
+		source++;
+	}	
+}
+*/
 

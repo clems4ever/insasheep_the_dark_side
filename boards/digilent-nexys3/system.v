@@ -14,6 +14,7 @@ module system
 	// ADDED clems_maul
 	// Voici notre firmware 
 	parameter   bootram_file     = "../../firmware/insa_firmware/image.ram",
+	//parameter   bootram_file     = "../../firmware/boot0-serial/image.ram",
 	// END ADDED
 	
 	parameter   clk_freq         = 100000000,
@@ -370,7 +371,7 @@ wire [1:0] sram_be_n;
 
 wb_sram16 #(
 	.adr_width(  23  ),
-	.latency(    5   )				//7 may be better - 10ns clock cycle, RAM has 70ns access time
+	.latency(   5   )				//7 may be better - 10ns clock cycle, RAM has 70ns access time
 ) sram0 (
 	.clk(         clk           ),
 	.reset(       rst           ),
