@@ -22,5 +22,8 @@ char uart_getchar();
 void uart_putchar(char c);
 void uart_print(const char *str);
 void uart_println(const char *str);
+void uart_skipline();
+void uart_printhex(int i);
+void uart_getstr(char *buffer, int buffer_size);
 
 #endif 

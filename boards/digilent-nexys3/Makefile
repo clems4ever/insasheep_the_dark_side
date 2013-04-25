@@ -37,7 +37,8 @@ SRC=                                      \
 	../../rtl/wb_timer/wb_timer.v         \
 	../../rtl/wb_gpio/wb_gpio.v           \
 	../../rtl/wb_conbus/wb_conbus_top.v   \
-	../../rtl/wb_conbus/wb_conbus_arb.v
+	../../rtl/wb_conbus/wb_conbus_arb.v   \
+	../../rtl/wb_norflash/norflash16.v
 #	../../rtl/wb_uart/uart.v              \
 
 #############################################################################
