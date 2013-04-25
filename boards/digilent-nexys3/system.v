@@ -6,8 +6,16 @@
 
 module system
 #(
+//	parameter   bootram_file     = "../../firmware/ddr-phaser/image.ram",
+//	parameter   bootram_file     = "../../firmware/boot0-serial/image.ram",
+//	parameter   bootram_file     = "../../firmware/boot-ram-test/image.ram",
+	//parameter   bootram_file     = "../../firmware/boot-dump-memory/image.ram",
+
+	// ADDED clems_maul
 	// Voici notre firmware 
 	parameter   bootram_file     = "../../firmware/insa_firmware/image.ram",
+	//parameter   bootram_file     = "../../firmware/boot0-serial/image.ram",
+	// END ADDED
 	
 	parameter   clk_freq         = 100000000,
 	parameter   uart_baud_rate   = 115200
@@ -25,18 +33,23 @@ module system
 	output           [25:0] mem_adr,		//22:0 PSRAM 25:0 PCM
 	inout            [15:0] mem_d,		//15:0 Databits for PSRAM and PCM
 										//2:0  DQ[3:1] of SPI Flash
-	output                  mem_oe,
-	output                  mem_we,
+	output 					mem_oe,
+	output					mem_we,
+	//output					mem_clk,
+	//output					mem_adv,
+	//output					mem_wait,
+
 
 	//RAM-only control signals
-	output                  sram_ce_n,
+	output					sram_ce_n,
 	output                  sram_ub,
 	output                  sram_lb,
+	//output 					sram_cre,
 
-	//Parallel fLash-only signals
-	output                  flash_ce_n,
-	output                  flash_rst_n
 
+	// Flash pins
+	output 					flash_ce_n,
+	output					flash_rst_n
 );
 
 wire         rst;
@@ -55,7 +68,7 @@ wire [31:0]  lm32i_adr,
              gpio0_adr,
              bram0_adr,
              sram0_adr,
-             norflash0_adr;
+			 norflash0_adr;
 
 wire [31:0]  lm32i_dat_r,
              lm32i_dat_w,
@@ -70,9 +83,9 @@ wire [31:0]  lm32i_dat_r,
              bram0_dat_r,
              bram0_dat_w,
              sram0_dat_r,
-             sram0_dat_wr,
-             norflash0_dat_r,
-             norflash0_dat_w;
+             sram0_dat_w,
+			 norflash0_dat_r,
+			 norflash0_dat_w;
 
 wire [3:0]   lm32i_sel,
              lm32d_sel,
@@ -81,7 +94,7 @@ wire [3:0]   lm32i_sel,
              gpio0_sel,
              bram0_sel,
              sram0_sel,
-             norflash0_sel;
+			 norflash0_sel;
 
 wire         lm32i_we,
              lm32d_we,
@@ -90,7 +103,7 @@ wire         lm32i_we,
              gpio0_we,
              bram0_we,
              sram0_we,
-             norflash0_we;
+			 norflash0_we;
 
 wire         lm32i_cyc,
              lm32d_cyc,
@@ -99,7 +112,7 @@ wire         lm32i_cyc,
              gpio0_cyc,
              bram0_cyc,
              sram0_cyc,
-             norflash0_cyc;
+			 norflash0_cyc;
 
 wire         lm32i_stb,
              lm32d_stb,
@@ -108,7 +121,7 @@ wire         lm32i_stb,
              gpio0_stb,
              bram0_stb,
              sram0_stb,
-             norflash0_stb;
+			 norflash0_stb;
 
 wire         lm32i_ack,
              lm32d_ack,
@@ -117,7 +130,7 @@ wire         lm32i_ack,
              gpio0_ack,
              bram0_ack,
              sram0_ack,
-             norflash0_ack;
+			 norflash0_ack;
 
 wire         lm32i_rty,
              lm32d_rty;
@@ -226,23 +239,23 @@ wb_conbus_top #(
 	.s0_dat_o(  sram0_dat_w   ),
 	.s0_adr_o(  sram0_adr     ),
 	.s0_sel_o(  sram0_sel     ),
-	.s0_we_o(   sram0_we      ),
+	.s0_we_o (  sram0_we      ),
 	.s0_cyc_o(  sram0_cyc     ),
 	.s0_stb_o(  sram0_stb     ),
 	.s0_ack_i(  sram0_ack     ),
 	.s0_err_i(  gnd    ),
 	.s0_rty_i(  gnd    ),
 	// Slave1
-	.s1_dat_i(  norflash0_dat_r   ),
-	.s1_dat_o(  norflash0_dat_w   ),
-	.s1_adr_o(  norflash0_adr     ),
-	.s1_sel_o(  norflash0_sel     ),
-	.s1_we_o(   norflash0_we      ),
-	.s1_cyc_o(  norflash0_cyc     ),
-	.s1_stb_o(  norflash0_stb     ),
-	.s1_ack_i(  norflash0_ack     ),
-	.s1_err_i(  gnd    ),
-	.s1_rty_i(  gnd    ),
+	.s1_dat_i(  norflash0_dat_r  ),
+	.s1_dat_o(  norflash0_dat_w  ),
+	.s1_adr_o(  norflash0_adr    ),
+	.s1_sel_o(  norflash0_sel    ),
+	.s1_we_o (  norflash0_we     ),
+	.s1_cyc_o(  norflash0_cyc    ),
+	.s1_stb_o(  norflash0_stb    ),
+	.s1_ack_i(  norflash0_ack    ),
+	.s1_err_i(  gnd             ),
+	.s1_rty_i(  gnd             ),
 	// Slave2
 	.s2_dat_i(  bram0_dat_r ),
 	.s2_dat_o(  bram0_dat_w ),
@@ -362,9 +375,8 @@ wb_bram #(
 wire [1:0] sram_be_n;
 wire [25:0] sram_adr;
 wire [15:0] sram_d;
-wire sram_oe_n;
 wire sram_we_n;
-
+wire sram_oe_n;
 
 wb_sram16 #(
 	.adr_width(  23  ),
@@ -382,96 +394,66 @@ wb_sram16 #(
 	.wb_sel_i(    sram0_sel     ),
 	.wb_ack_o(    sram0_ack     ),
 	// SRAM
-	.sram_adr(    sram_adr[22:0]  ),
-	.sram_dat(    sram_d         ),
-	.sram_be_n(   sram_be_n     ),
+	.sram_adr(    sram_adr[22:0]       ),
+	.sram_dat(    sram_d               ),
+	.sram_be_n(   sram_be_n            ),
 	.sram_ce_n(   sram_ce_n         ),
 	.sram_oe_n(   sram_oe_n         ),
 	.sram_we_n(   sram_we_n         )
 );
 
+assign sram_adr[25:23] = 3'b000;
 assign sram_lb = sram_be_n[0];
 assign sram_ub = sram_be_n[1];
 
-assign sram_adr[25:23] = 3'b0;
-
 //---------------------------------------------------------------------------
-// norflash0 
+// Flash
 //---------------------------------------------------------------------------
-
 wire [25:0] flash_adr;
 wire [15:0] flash_d;
 wire flash_oe_n;
 wire flash_we_n;
 
 norflash16 #(
-	.adr_width(  24  )
+    .adr_width(24)
 ) norflash0 (
-	.sys_clk(         clk           ),
-	.sys_rst(       rst           ),
+    .sys_clk(   clk              ),
+    .sys_rst(   rst              ),
 	// Wishbone
-	.wb_cyc_i(    norflash0_cyc     ),
-	.wb_stb_i(    norflash0_stb     ),
-	.wb_we_i(     norflash0_we      ),
-	.wb_adr_i(    norflash0_adr     ),
-	.wb_dat_o(    norflash0_dat_r   ),
-	.wb_dat_i(    norflash0_dat_w   ),
-	.wb_sel_i(    norflash0_sel     ),
-	.wb_ack_o(    norflash0_ack     ),
-	// SRAM
-	.flash_adr(    flash_adr[23:0]     ),
-	.flash_d(      flash_d             ),
-	.flash_oe_n(   flash_oe_n          ),
-	.flash_we_n(   flash_we_n          )
+	.wb_adr_i(  norflash0_adr    ),
+	.wb_dat_o(  norflash0_dat_r  ),
+	.wb_dat_i(  norflash0_dat_w  ),
+	.wb_sel_i(  norflash0_sel    ),
+	.wb_stb_i(  norflash0_stb    ),
+	.wb_cyc_i(  norflash0_cyc    ),
+	.wb_ack_o(  norflash0_ack    ),
+	.wb_we_i(   norflash0_we     ),
+	// Flash
+	.flash_adr(     flash_adr[23:0]  ),
+	.flash_d(       flash_d        ),
+	.flash_oe_n(    flash_oe_n       ),
+	.flash_we_n(    flash_we_n       )
 );
 
-assign flash_ce_n = 1'b1; //~norflash0_cyc;
+assign flash_adr[25:24] = 2'b00;
+assign flash_ce_n = ~norflash0_cyc;
 assign flash_rst_n = 1'b1;
 
-assign flash_adr[25:24] = 2'b0;
 
+
+//----------------------------------------------------------------------------
+// Memory selector
 //---------------------------------------------------------------------------
-// Memory Selector 
-//---------------------------------------------------------------------------
 
-/*reg [15:0] mem_d_t;
-wire sram_selector = 1; //sram0_cyc;
+assign mem_d = (norflash0_cyc & norflash0_we) ? flash_d : 16'bZ ;
+assign flash_d = (norflash0_cyc & ~norflash0_we) ? mem_d : 16'bZ ;
 
+assign mem_d = (sram0_cyc & sram0_we) ? sram_d :  16'bZ ;
+assign sram_d = (sram0_cyc & ~sram0_we) ? mem_d : 16'bZ ;
 
-always @(norflash0_cyc or norflash0_we or sram0_cyc or sram0_we) begin
-	if( norflash0_cyc ) begin
-		if( norflash0_we ) begin
-			mem_d_t <= flash_d;
-		end
-		else begin
-			mem_d_t <= 16'hZZZZ;
-		end
-	end
-	else if(sram0_cyc) begin
-		if(sram0_we) begin
-			mem_d_t <= sram_d;
-		end
-		else begin
-			mem_d_t <= 16'hZZZZ;
-		end	
-	end
-	mem_d_t <= 16'hZZZZ;
-end	
-
-assign flash_d = (norflash0_cyc & ~norflash0_we) ? mem_d : 16'hZZZZ;
-assign sram_d = (sram0_cyc & ~sram0_we) ? mem_d : 16'hZZZZ;
-assign mem_d = mem_d_t;
-
-assign mem_adr = (sram_selector) ? sram_adr : flash_adr;
-assign mem_oe = (sram_selector) ? sram_oe_n : flash_oe_n;
-assign mem_we = (sram_selector) ? sram_we_n : flash_we_n;
-*/
-assign sram_d = (sram0_cyc & ~sram0_we) ? mem_d : 16'hZZZZ;
-assign mem_d = sram_d;
-
-assign mem_adr = sram_adr;
-assign mem_oe = sram_oe_n;
-assign mem_we = sram_we_n;
+assign mem_adr= (~sram_ce_n) ? sram_adr : flash_adr ;
+assign mem_oe = (~sram_ce_n) ? sram_oe_n : flash_oe_n ;
+assign mem_we = (~sram_ce_n) ? sram_we_n : flash_we_n ;
 
 //---------------------------------------------------------------------------
 // uart0
@@ -601,7 +583,8 @@ assign uart0_rxd = (sw[0]) ? uart_rxd  : 1;
 //----------------------------------------------------------------------------
 // Mux LEDs and Push Buttons according to sw[1]
 //----------------------------------------------------------------------------
-wire [7:0] debug_leds = { clk, rst, ~uart_rxd, ~uart_txd, lm32i_stb, lm32i_ack, lm32d_stb, lm32d_ack };
+//wire [7:0] debug_leds = { clk, rst, ~uart_rxd, ~uart_txd, lm32i_stb, lm32i_ack, lm32d_stb, lm32d_ack };
+wire [7:0] debug_leds = { clk, rst, sram0_cyc, ~uart_txd, lm32i_stb, lm32i_ack, lm32d_stb, lm32d_ack };
 wire [7:0] gpio_leds  = gpio0_out[7:0];
 
 assign led             = (sw[1]) ? gpio_leds : debug_leds;

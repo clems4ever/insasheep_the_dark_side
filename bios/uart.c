@@ -41,10 +41,13 @@ void uart_getstr(char *buffer, int buffer_size){
 	int size=0;
 	do{
 		c = uart_getchar();
+		if(c != '\r')
+			uart_putchar(c);
 		buffer[size] = c;
 		size++;
 	} while( c!='\r' && size < buffer_size);
 	buffer[size-1] = 0;
+	uart_skipline();
 }
 
 

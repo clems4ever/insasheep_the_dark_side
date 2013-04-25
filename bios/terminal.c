@@ -37,7 +37,7 @@ void ramtest(){
 
 void flashtest(){
 	int i;
-	char *flash = (char *)0x50004000;
+	char *flash = (char *)0x50000000;
 	uart_print("Try to write in Flash at the address ");
 	uart_printhex((int) flash);
 	uart_skipline();
