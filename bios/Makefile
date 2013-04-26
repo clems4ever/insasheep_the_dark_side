@@ -3,16 +3,16 @@ LM32_LD=lm32-elf-ld
 LM32_OBJCOPY=lm32-elf-objcopy
 LM32_OBJDUMP=lm32-elf-objdump
 
-CFLAGS=-MMD -O2 -Wall -g -s -fomit-frame-pointer -mbarrel-shift-enabled   -mmultiply-enabled -mdivide-enabled -msign-extend-enabled -fno-builtin
+CFLAGS=-MMD -O0 -Wall -g -s -fomit-frame-pointer -mbarrel-shift-enabled   -mmultiply-enabled -mdivide-enabled -msign-extend-enabled -fno-builtin
 LDFLAGS=-nostdlib -nodefaultlibs -Tlinker.ld 
 SEGMENTS = -j .text -j .rodata -j .data
 
 all: image.bin 
 
-crt0.o:crt0.S
+%.o:%.S
 	$(LM32_CC) -c $<
 
-image: crt0.o main.o uart.o string.o terminal.o
+image: crt0.o main.o uart.o string.o terminal.o flash.o
 	$(LM32_LD) $(LDFLAGS) -Map image.map -N -o $@ $^ 
 
 image.lst: image

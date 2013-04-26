@@ -38,7 +38,8 @@ SRC=                                      \
 	../../rtl/wb_gpio/wb_gpio.v           \
 	../../rtl/wb_conbus/wb_conbus_top.v   \
 	../../rtl/wb_conbus/wb_conbus_arb.v   \
-	../../rtl/wb_norflash/norflash16.v
+	../../rtl/wb_norflash/norflash16.v    \
+	../../rtl/wb_flash/wb_flash.v
 #	../../rtl/wb_uart/uart.v              \
 
 #############################################################################

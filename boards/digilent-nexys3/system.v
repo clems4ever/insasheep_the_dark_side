@@ -34,7 +34,7 @@ module system
 	inout            [15:0] mem_d,		//15:0 Databits for PSRAM and PCM
 										//2:0  DQ[3:1] of SPI Flash
 	output reg					mem_oe,
-	output reg 				mem_we,
+	output reg 		     		mem_we,
 	//output					mem_clk,
 	//output					mem_adv,
 	//output					mem_wait,
@@ -95,7 +95,7 @@ wire [3:0]   lm32i_sel,
              bram0_sel,
              sram0_sel,
 			 norflash0_sel;
-
+			 
 wire         lm32i_we,
              lm32d_we,
              uart0_we,
@@ -413,7 +413,7 @@ wire [25:0] flash_adr;
 wire [15:0] flash_d;
 wire flash_oe_n;
 wire flash_we_n;
-wire flash_clk;
+
 
 norflash16 #(
     .adr_width(24)
@@ -439,6 +439,7 @@ norflash16 #(
 assign flash_rst_n = 1'b1;
 assign flash_ce_n = ~(norflash0_cyc);
 
+
 /*
 wb_flash #(
 	.adr_width( 24 )
@@ -460,8 +461,7 @@ wb_flash #(
 	.flash_oe_n(    flash_oe_n       ),
 	.flash_we_n(    flash_we_n       ),
 	.flash_ce_n(    flash_ce_n       ),
-	.flash_rst_n(    flash_rst_n      ),
-	.flash_clk (    flash_clk        )
+	.flash_rst_n(    flash_rst_n      )
 );	
 */
 
@@ -479,6 +479,7 @@ reg [15:0] flash_d_t;
 
 always @(sram_ce_n or flash_ce_n or sram0_we or norflash0_we) 
 begin
+	// SRAM selected
 	if(~sram_ce_n) begin
 		mem_adr <= sram_adr;
 		mem_oe <= sram_oe_n;
@@ -492,6 +493,7 @@ begin
 			sram_d_t <= mem_d;
 		end
 	end
+	// Flash selected
 	else if(~flash_ce_n) begin
 		mem_adr <= flash_adr;
 		mem_oe <= flash_oe_n;
@@ -505,6 +507,7 @@ begin
 			flash_d_t <= mem_d;
 		end
 	end
+	// No memory selected
 	else begin
 		mem_oe <= 1'b1;
 		mem_we <= 1'b1;
@@ -519,43 +522,6 @@ end
 assign mem_d   = mem_d_t;
 assign sram_d  = sram_d_t;
 assign flash_d  = flash_d_t;
-
-/*genvar i;
-generate
-for(i=0; i<16; i=i+1) begin
-bufif1 mem2sram (	
-					sram_d[i],
-					mem_d[i],
-					sram0_cyc & ~sram0_we);
-bufif1 sram2mem (	
-					mem_d[i],
-					sram_d[i],
-					sram0_cyc & sram0_we);
-
-bufif1 mem2flash (	
-					flash_d[i],
-					mem_d[i],
-					norflash0_cyc & ~norflash0_we);
-bufif1 flash2mem (	
-					mem_d[i],
-					flash_d[i],
-					norflash0_cyc & norflash0_we);
-end		
-endgenerate*/
-
-/*assign mem_d = (norflash0_cyc & norflash0_we) ? flash_d : 16'bZ ;
-assign flash_d = (norflash0_cyc & ~norflash0_we) ? mem_d : 16'bZ ;
-*/
-/*
-assign mem_d = (sram0_cyc & sram0_we) ? sram_d :  16'bZ ;
-assign sram_d = (sram0_cyc & ~sram0_we) ? mem_d : 16'bZ ;
-*/
-
-/*
-assign mem_adr= (sram0_cyc) ? sram_adr : flash_adr ;
-assign mem_oe = (sram0_cyc) ? sram_oe_n : flash_oe_n ;
-assign mem_we = (sram0_cyc) ? sram_we_n : flash_we_n ;
-*/
 
 //---------------------------------------------------------------------------
 // uart0
@@ -675,6 +641,7 @@ assign probe = (select[3:0] == 'h0) ? { rst, lm32i_stb, lm32i_cyc, lm32i_ack, lm
                                       lm32d_adr[ 7: 0] ;
 */
 
+
 //----------------------------------------------------------------------------
 // Mux UART wires according to sw[0]
 //----------------------------------------------------------------------------
@@ -685,8 +652,9 @@ assign uart0_rxd = (sw[0]) ? uart_rxd  : 1;
 //----------------------------------------------------------------------------
 // Mux LEDs and Push Buttons according to sw[1]
 //----------------------------------------------------------------------------
-//wire [7:0] debug_leds = { clk, rst, ~uart_rxd, ~uart_txd, lm32i_stb, lm32i_ack, lm32d_stb, lm32d_ack };
-wire [7:0] debug_leds = { clk, rst, sram0_cyc, ~uart_txd, lm32i_stb, lm32i_ack, lm32d_stb, lm32d_ack };
+wire [7:0] debug_leds = { clk, rst, ~uart_rxd, ~uart_txd, lm32i_stb, lm32i_ack, lm32d_stb, lm32d_ack };
+//wire [7:0] debug_leds = { 4'b0000, norflash0_sel};
+//{ clk, rst, sram0_cyc, ~uart_txd, lm32i_stb, lm32i_ack, lm32d_stb, lm32d_ack };
 wire [7:0] gpio_leds  = gpio0_out[7:0];
 
 assign led             = (sw[1]) ? gpio_leds : debug_leds;

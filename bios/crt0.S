@@ -92,6 +92,11 @@ _reset_handler:
 		halt:
 		bi halt
 
+		/*unlock_flash:
+			mov
+			sh (r1 + 0x0), r2
+			mvhi r2, 0x0
+*/
 		/* Save all registers onto the stack */
 		/*
 		   _save_all:

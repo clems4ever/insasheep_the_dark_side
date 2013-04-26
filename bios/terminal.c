@@ -6,11 +6,16 @@
 #define RAMTEST_SIZE 10
 #define FLASHTEST_SIZE 10
 
-
-extern halt();
+extern void halt();
+extern void unlock_block(short *block);
+extern short flash_write(short *addr, short value);
+extern short flash_read(short *addr);
+extern short flash_erase_block(short *block);
 
 void reboot(){
-	uart_println("TODO: Reboots the system");
+	int i=0;
+	//for(i=0; i<100000; i++);
+	//uart_println("TODO: Reboots the system");
 }
 
 
@@ -35,18 +40,33 @@ void ramtest(){
 	}
 }
 
+
+#define FLASH_TEST_BASE 0x50000010
+#define TEST_VALUE 0x01
+
 void flashtest(){
 	int i;
-	char *flash = (char *)0x50000000;
+	short *flash = (short*)FLASH_TEST_BASE;
+	short status;
 	uart_print("Try to write in Flash at the address ");
-	uart_printhex((int) flash);
+	uart_printhex(flash);
 	uart_skipline();
+
+	uart_println("Unlock the block");
+	unlock_block(flash);
+
+	uart_println("Write memory");
 	for(i=0; i<FLASHTEST_SIZE; i++){
-		flash[i] = i;	
+		status = flash_write(FLASH_TEST_BASE+i*2, i+0x0);
+		uart_print("write status = ");
+		uart_printhex(status);
+		uart_skipline();
 	}
+	//flash_erase_block(flash);
+
 	uart_println("Try to dump memory, it should return the numbers from 0 to 9");
 	for(i=0; i<FLASHTEST_SIZE; i++){
-		uart_printhex(flash[i]);	
+		uart_printhex(flash_read(flash++));	
 		uart_skipline();
 	}
 }
