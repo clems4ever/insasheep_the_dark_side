@@ -30,11 +30,11 @@ module system
 	output                  uart_txd,
 
 	// Memory (shared between parallel flash and PSRAM)
-	output           [25:0] mem_adr,		//22:0 PSRAM 25:0 PCM
+	output reg          [25:0] mem_adr,		//22:0 PSRAM 25:0 PCM
 	inout            [15:0] mem_d,		//15:0 Databits for PSRAM and PCM
 										//2:0  DQ[3:1] of SPI Flash
-	output 					mem_oe,
-	output					mem_we,
+	output reg					mem_oe,
+	output reg 				mem_we,
 	//output					mem_clk,
 	//output					mem_adv,
 	//output					mem_wait,
@@ -413,6 +413,7 @@ wire [25:0] flash_adr;
 wire [15:0] flash_d;
 wire flash_oe_n;
 wire flash_we_n;
+wire flash_clk;
 
 norflash16 #(
     .adr_width(24)
@@ -430,14 +431,41 @@ norflash16 #(
 	.wb_we_i(   norflash0_we     ),
 	// Flash
 	.flash_adr(     flash_adr[23:0]  ),
-	.flash_d(       flash_d        ),
+	.flash_d(       flash_d          ),
 	.flash_oe_n(    flash_oe_n       ),
 	.flash_we_n(    flash_we_n       )
 );
 
-assign flash_adr[25:24] = 2'b00;
-assign flash_ce_n = ~norflash0_cyc;
 assign flash_rst_n = 1'b1;
+assign flash_ce_n = ~(norflash0_cyc);
+
+/*
+wb_flash #(
+	.adr_width( 24 )
+)  norflash0 (
+	.clk( clk ),
+	.rst( rst ),
+	// Wishbone
+	.wb_adr_i(  norflash0_adr    ),
+	.wb_dat_o(  norflash0_dat_r  ),
+	.wb_dat_i(  norflash0_dat_w  ),
+	.wb_sel_i(  norflash0_sel    ),
+	.wb_stb_i(  norflash0_stb    ),
+	.wb_cyc_i(  norflash0_cyc    ),
+	.wb_ack_o(  norflash0_ack    ),
+	.wb_we_i(   norflash0_we     ),
+	// Flash
+	.flash_address(     flash_adr[23:0]  ),
+	.flash_data(       flash_d        ),
+	.flash_oe_n(    flash_oe_n       ),
+	.flash_we_n(    flash_we_n       ),
+	.flash_ce_n(    flash_ce_n       ),
+	.flash_rst_n(    flash_rst_n      ),
+	.flash_clk (    flash_clk        )
+);	
+*/
+
+assign flash_adr[25:24] = 2'b00;
 
 
 
@@ -445,15 +473,89 @@ assign flash_rst_n = 1'b1;
 // Memory selector
 //---------------------------------------------------------------------------
 
-assign mem_d = (norflash0_cyc & norflash0_we) ? flash_d : 16'bZ ;
-assign flash_d = (norflash0_cyc & ~norflash0_we) ? mem_d : 16'bZ ;
+reg [15:0] mem_d_t;
+reg [15:0] sram_d_t;
+reg [15:0] flash_d_t;
 
+always @(sram_ce_n or flash_ce_n or sram0_we or norflash0_we) 
+begin
+	if(~sram_ce_n) begin
+		mem_adr <= sram_adr;
+		mem_oe <= sram_oe_n;
+		mem_we <= sram_we_n;
+		flash_d_t <= 16'bZ;
+		if(sram0_we) begin
+			sram_d_t <= 16'bZ;
+			mem_d_t <= sram_d;
+		end else begin
+			mem_d_t <= 16'bZ;
+			sram_d_t <= mem_d;
+		end
+	end
+	else if(~flash_ce_n) begin
+		mem_adr <= flash_adr;
+		mem_oe <= flash_oe_n;
+		mem_we <= flash_we_n;
+		sram_d_t <= 16'bZ;
+		if(norflash0_we) begin
+			flash_d_t <= 16'bZ;
+			mem_d_t <= flash_d;
+		end else begin
+			mem_d_t <= 16'bZ;
+			flash_d_t <= mem_d;
+		end
+	end
+	else begin
+		mem_oe <= 1'b1;
+		mem_we <= 1'b1;
+
+		flash_d_t <= 16'bZ;
+		sram_d_t <= 16'bZ;
+		mem_d_t <= 16'bZ;
+	end
+end
+
+															      
+assign mem_d   = mem_d_t;
+assign sram_d  = sram_d_t;
+assign flash_d  = flash_d_t;
+
+/*genvar i;
+generate
+for(i=0; i<16; i=i+1) begin
+bufif1 mem2sram (	
+					sram_d[i],
+					mem_d[i],
+					sram0_cyc & ~sram0_we);
+bufif1 sram2mem (	
+					mem_d[i],
+					sram_d[i],
+					sram0_cyc & sram0_we);
+
+bufif1 mem2flash (	
+					flash_d[i],
+					mem_d[i],
+					norflash0_cyc & ~norflash0_we);
+bufif1 flash2mem (	
+					mem_d[i],
+					flash_d[i],
+					norflash0_cyc & norflash0_we);
+end		
+endgenerate*/
+
+/*assign mem_d = (norflash0_cyc & norflash0_we) ? flash_d : 16'bZ ;
+assign flash_d = (norflash0_cyc & ~norflash0_we) ? mem_d : 16'bZ ;
+*/
+/*
 assign mem_d = (sram0_cyc & sram0_we) ? sram_d :  16'bZ ;
 assign sram_d = (sram0_cyc & ~sram0_we) ? mem_d : 16'bZ ;
+*/
 
-assign mem_adr= (~sram_ce_n) ? sram_adr : flash_adr ;
-assign mem_oe = (~sram_ce_n) ? sram_oe_n : flash_oe_n ;
-assign mem_we = (~sram_ce_n) ? sram_we_n : flash_we_n ;
+/*
+assign mem_adr= (sram0_cyc) ? sram_adr : flash_adr ;
+assign mem_oe = (sram0_cyc) ? sram_oe_n : flash_oe_n ;
+assign mem_we = (sram0_cyc) ? sram_we_n : flash_we_n ;
+*/
 
 //---------------------------------------------------------------------------
 // uart0
