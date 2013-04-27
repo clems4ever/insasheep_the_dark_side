@@ -39,8 +39,9 @@ for uptodate information.
 
 1.1 Memory Map
 
-  [0x00000000,0x00001000) bram0      -- Bootloader BlockRAM 
-  [0x40000000,0x40000000) sram0/ddr0 -- Externam RAM (size depends on actual board)
+  [0x00000000,0x00001000) bram0      -- Bootstrap BlockRAM 
+  [0x40000000,0x4FFFFFFF) sram0      -- SRAM (16MBytes)
+  [0x50000000,0x5FFFFFFF) flash0     -- Flash (16Mbytes)
   [0x70000000,0x70010000) uart0      -- serial communication  component
   [0x70010000,0x70020000) timer0     -- 32 bit dual timer engine
   [0x70020000,0x70020000) gpio0      -- General Purpose IO 
