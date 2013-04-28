@@ -1,0 +1,7 @@
+INFILE=/media/30FD58A66C5042BE/Documents/INSA_2011_-/4IR_B1_S2/Ptut/insasheep_the_dark_side/boards/digilent-nexys3/system-routed.ncd
+OUTFILE=/media/30FD58A66C5042BE/Documents/INSA_2011_-/4IR_B1_S2/Ptut/insasheep_the_dark_side/boards/digilent-nexys3/system.bit
+FAMILY=Spartan6
+PART=xc6slx16-3csg324
+WORKINGDIR=/media/30FD58A66C5042BE/Documents/INSA_2011_-/4IR_B1_S2/Ptut/insasheep_the_dark_side/boards/digilent-nexys3
+LICENSE=WebPack
+USER_INFO=0_0_415

@@ -1,6 +1,7 @@
 #include "string.h"
 #include "terminal.h"
 #include "uart.h"
+#include "d_stdio.h"
 
 #define KERNEL_BASE (void*)0x40001000
 
@@ -8,9 +9,8 @@ extern void jump(void *addr);
 
 int main(int argc, char **argv){
 		char cmd[50];
-
-		uart_print("========= INSA BOOTLOADER ========\r\n");
-
+      
+		printfln("========= INSA BOOTLOADER ======== %s \r\n", "salute");
 		while(1){
 			getCommand(cmd, 50);
 			parseCommand(cmd);

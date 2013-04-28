@@ -2,6 +2,7 @@
 #include "string.h"
 #include "terminal.h"
 #include "uart.h"
+#include "d_stdio.h"
 
 #define RAMTEST_SIZE 10
 #define FLASHTEST_SIZE 10
@@ -13,7 +14,7 @@ extern short flash_read(short *addr);
 extern short flash_erase_block(short *block);
 
 void reboot(){
-	int i=0;
+	//int i=0;
 	//for(i=0; i<100000; i++);
 	//uart_println("TODO: Reboots the system");
 }

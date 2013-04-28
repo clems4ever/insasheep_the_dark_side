@@ -12,7 +12,7 @@ all: image.bin
 %.o:%.S
 	$(LM32_CC) -c $<
 
-image: crt0.o main.o uart.o string.o terminal.o flash.o
+image: crt0.o main.o uart.o string.o terminal.o flash.o d_stdio.o
 	$(LM32_LD) $(LDFLAGS) -Map image.map -N -o $@ $^ 
 
 image.lst: image
