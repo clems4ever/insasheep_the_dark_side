@@ -31,6 +31,7 @@ http://www.menie.org/georges/embedded/printf-stdarg.c
 //#define DEBUG_ON
 char buffer[BUFF_SIZE];
 int ndex = 0;
+
 static void printchar(char c)
 {
 	extern void putchar(char c);
@@ -186,7 +187,7 @@ static int print(const char *format, va_list args )
 	return pc;
 }
 
-void printf(const char *format, ...)
+void printf ( const char * format, ... )
 {
    va_list args;
    
@@ -197,17 +198,16 @@ void printf(const char *format, ...)
       buffer[BUFF_SIZE-1] = '\0'; 
    }
 #endif
+   ndex = 0;
    va_start( args, format );
    print(format, args );
    uart_print(buffer);
-   
 }
 
 void printfln(const char *format, ...)
 {
    va_list args;
    
-   va_start( args, format );
 #ifdef DEBUG_ON
    {
       int i;
@@ -215,7 +215,8 @@ void printfln(const char *format, ...)
       buffer[BUFF_SIZE-1] = '\0'; 
    }
 #endif
+   ndex = 0;
+   va_start( args, format );
    print(format, args );
-   uart_println(buffer);
-   
+   uart_println(buffer);  
 }

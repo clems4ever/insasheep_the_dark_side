@@ -14,11 +14,9 @@ char uart_getchar(){
 
 
 void uart_putchar(char c){
-			   //uart_println("here 09");
+
 	while(uart0->ucr & UART_BUSY) ;
-				  // uart_println("here 10");
 	uart0->rxtx = c;
-				  // uart_println("here 11");
 }
 
 void uart_print(const char *str){

@@ -6,12 +6,14 @@
 
 #define RAMTEST_SIZE 10
 #define FLASHTEST_SIZE 10
+#define KERNEL_BASE (void*)0x40001300
 
 extern void halt();
 extern void unlock_block(short *block);
 extern short flash_write(short *addr, short value);
 extern short flash_read(short *addr);
 extern short flash_erase_block(short *block);
+extern void jump(void *addr);
 
 void reboot(){
 	//int i=0;
@@ -21,7 +23,9 @@ void reboot(){
 
 
 void jump_to_kernel(){
-	uart_println("TODO: Jump to kernel");
+	uart_println("Jump to kernel");
+	jump(KERNEL_BASE);
+	while(1);
 }
 
 
@@ -111,7 +115,7 @@ void parseCommand(const char *cmd){
 		halt();
 	}
 	else{
-		uart_println("Unknown command...");
+		printfln("Unknown command... %s", cmd);
 	}
 }
 

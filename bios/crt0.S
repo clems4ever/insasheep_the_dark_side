@@ -87,7 +87,13 @@ _reset_handler:
 		   ret
 		 */
 		jump:
-		b r1
+		wcsr ICC, r0
+	   nop
+	   nop
+	   nop
+	   nop
+		call r1
+		/*b r1*/
 
 		halt:
 		bi halt

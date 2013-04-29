@@ -7,16 +7,16 @@
 #define BUFF_SIZE 256
 /**
 * Normal printf
-* @param str : The formated string to print
+* @param format : The formated string to print
 * @param ... : The values of the format in the string
 */
-void printf ( const char * str, ... );
+void printf ( const char * format, ... );
 
 /**
 * Printf wich append a '\n' at the end of the string
-* @param str : The formated string to print
+* @param format : The formated string to print
 * @param ... : The values of the format in the string
 */
-void printfln ( const char * str, ... );
+void printfln ( const char * format, ... );
 
 #endif
