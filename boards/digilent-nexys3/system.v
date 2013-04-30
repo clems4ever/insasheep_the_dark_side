@@ -548,30 +548,6 @@ assign flash_d  = flash_d_t;
 // Graphic card (VGA)
 //---------------------------------------------------------------------------
 
-/*
-	if(rst) begin
-		lm32i_rty <= 1'b0;
-		lm32d_rty <= 1'b0;
-	end
-
-	if(rty == 1 & gc_cyc == 0) begin
-		lm32i_rty <= 1'b1;
-		lm32d_rty <= 1'b1;
-		rty <= 0;
-	end	
-
-	if(gc_cyc == 1)
-		rty <= 1;
-
-	if(rty == 0) begin
-		lm32i_rty <= 1'b0;
-		lm32d_rty <= 1'b0;
-	end	
-end
-*/
-//assign lm32i_cyc_o = lm32i_cyc;
-//assign lm32d_cyc_o = lm32d_cyc;
-
 wb_master_arbitrer arbitrer0 (
 	.clk(clk),
 	.rst(rst),
