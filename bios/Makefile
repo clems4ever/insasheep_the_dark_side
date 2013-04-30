@@ -7,12 +7,15 @@ CFLAGS=-MMD -O0 -Wall -g -s -fomit-frame-pointer -mbarrel-shift-enabled   -mmult
 LDFLAGS=-nostdlib -nodefaultlibs -Tlinker.ld 
 SEGMENTS = -j .text -j .rodata -j .data
 
-all: image.bin 
+all: image.bin test
 
 %.o:%.S
 	$(LM32_CC) -c $<
 
-image: crt0.o main.o uart.o string.o terminal.o flash.o
+test: crt0.o test.o uart.o d_stdio.o
+	$(LM32_LD) $(LDFLAGS) -o $@ $^ 
+	
+image: crt0.o main.o uart.o string.o terminal.o flash.o d_stdio.o
 	$(LM32_LD) $(LDFLAGS) -Map image.map -N -o $@ $^ 
 
 image.lst: image
@@ -21,13 +24,19 @@ image.lst: image
 image.bin: image
 	$(LM32_OBJCOPY) $(SEGMENTS) -O binary image image.bin
 
+test.lst: test
+	$(LM32_OBJDUMP) -h -S $< > $@
+
+test.bin: test
+	$(LM32_OBJCOPY) $(SEGMENTS) -O binary test test.bin
+
 
 %.o:%.c
 	$(LM32_CC) $(CFLAGS) -c $< 
 	
 
 clean:
-	rm -f image image.bin image.map *.o *.d
+	rm -f image image.bin image.map test test.bin test.map *.o *.d
 
 DEPS := $(wildcard *.d)
 ifneq ($(DEPS),)

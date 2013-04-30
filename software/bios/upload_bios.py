@@ -8,12 +8,13 @@ serial_port = "/dev/ttyUSB0"
 out = open(serial_port, "w+b")
 
 
-with open("test", "rb") as f:
+with open("image.bin", "rb") as f:
 	content = f.read();
 
-start = 0x40000000
+start = 0x40300000
+
 bios_size = len(content)
-print "BIOS is % bytes", bios_size
+print "BIOS is %d bytes (0x%x)" % (bios_size,bios_size)
 
 format = "i"                   # one integer
 data = struct.pack(format, start) # pack integer in a binary string

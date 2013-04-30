@@ -8,10 +8,11 @@ serial_port = "/dev/ttyUSB0"
 out = open(serial_port, "w+b")
 
 
-with open("test", "rb") as f:
+with open("image.bin", "rb") as f:
 	content = f.read();
 
-start = 0x40000000
+start = 0x40000100
+
 bios_size = len(content)
 print "BIOS is % bytes", bios_size
 

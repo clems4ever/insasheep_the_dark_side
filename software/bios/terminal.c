@@ -1,12 +1,12 @@
-
-#include "string.h"
+#include <string.h>
+#include <uart.h>
+#include <d_stdio.h>
 #include "terminal.h"
-#include "uart.h"
-#include "d_stdio.h"
+
 
 #define RAMTEST_SIZE 10
 #define FLASHTEST_SIZE 10
-#define KERNEL_BASE (void*)0x40001300
+#define KERNEL_BASE (void*)0x40000000
 
 extern void halt();
 extern void unlock_block(short *block);
@@ -28,30 +28,6 @@ void jump_to_kernel(){
 	while(1);
 }
 
-void vga_black(){
-	int i;
-	short *vram = (short*) 0x40800000;
-	uart_println("Write memory");
-	for(i=0; i<800*300; i++){
-		vram[i] = 0x0000;
-	}
-}
-
-void vga_white(){
-	int x, y;
-	char *vram = (char*) 0x40800000;
-	uart_println("Write memory");
-	for(y=0; y<600; y++){
-		for(x=0; x<800; x++){
-			if(x>=0 && x<268)
-				vram[y*800+x] = 0xFF & 0x01;
-			if(x >=268 && x <532)
-				vram[y*800+x] = 0xFF & 0x07;
-			if(x >=532 && x <800)
-				vram[y*800+x] = 0xFF & 0x04;
-		}
-	}
-}
 
 void ramtest(){
 	int i;
@@ -137,12 +113,6 @@ void parseCommand(const char *cmd){
 	}
 	else if(strcmp(cmd, "halt") == 0){
 		halt();
-	}
-	else if(strcmp(cmd, "white") == 0){
-		vga_white();
-	}
-	else if(strcmp(cmd, "black") == 0){
-		vga_black();
 	}
 	else{
 		printfln("Unknown command... %s", cmd);
