@@ -49,7 +49,13 @@ module system
 
 	// Flash pins
 	output 					flash_ce_n,
-	output					flash_rst_n
+	output					flash_rst_n,
+
+	output 					vga_hsync,
+	output 					vga_vsync,
+	output 					vga_red,
+	output 					vga_green,
+	output 					vga_blue
 );
 
 wire         rst;
@@ -68,6 +74,7 @@ wire [31:0]  lm32i_adr,
              gpio0_adr,
              bram0_adr,
              sram0_adr,
+			 gc_adr,
 			 norflash0_adr;
 
 wire [31:0]  lm32i_dat_r,
@@ -84,6 +91,8 @@ wire [31:0]  lm32i_dat_r,
              bram0_dat_w,
              sram0_dat_r,
              sram0_dat_w,
+			 gc_dat_r,
+			 gc_dat_w,
 			 norflash0_dat_r,
 			 norflash0_dat_w;
 
@@ -94,6 +103,7 @@ wire [3:0]   lm32i_sel,
              gpio0_sel,
              bram0_sel,
              sram0_sel,
+			 gc_sel,
 			 norflash0_sel;
 			 
 wire         lm32i_we,
@@ -103,6 +113,7 @@ wire         lm32i_we,
              gpio0_we,
              bram0_we,
              sram0_we,
+			 gc_we,
 			 norflash0_we;
 
 wire         lm32i_cyc,
@@ -112,7 +123,11 @@ wire         lm32i_cyc,
              gpio0_cyc,
              bram0_cyc,
              sram0_cyc,
-			 norflash0_cyc;
+			 gc_cyc,
+			 norflash0_cyc,
+			 lm32i_cyc_o,
+			 lm32d_cyc_o,
+			 gc_cyc_o;
 
 wire         lm32i_stb,
              lm32d_stb,
@@ -121,6 +136,7 @@ wire         lm32i_stb,
              gpio0_stb,
              bram0_stb,
              sram0_stb,
+			 gc_stb,
 			 norflash0_stb;
 
 wire         lm32i_ack,
@@ -130,6 +146,7 @@ wire         lm32i_ack,
              gpio0_ack,
              bram0_ack,
              sram0_ack,
+			 gc_ack,
 			 norflash0_ack;
 
 wire         lm32i_rty,
@@ -181,7 +198,7 @@ wb_conbus_top #(
 	.m0_adr_i(  lm32i_adr    ),
 	.m0_we_i (  lm32i_we     ),
 	.m0_sel_i(  lm32i_sel    ),
-	.m0_cyc_i(  lm32i_cyc    ),
+	.m0_cyc_i(  lm32i_cyc_o    ),
 	.m0_stb_i(  lm32i_stb    ),
 	.m0_ack_o(  lm32i_ack    ),
 	.m0_rty_o(  lm32i_rty    ),
@@ -192,17 +209,20 @@ wb_conbus_top #(
 	.m1_adr_i(  lm32d_adr    ),
 	.m1_we_i (  lm32d_we     ),
 	.m1_sel_i(  lm32d_sel    ),
-	.m1_cyc_i(  lm32d_cyc    ),
+	.m1_cyc_i(  lm32d_cyc_o    ),
 	.m1_stb_i(  lm32d_stb    ),
 	.m1_ack_o(  lm32d_ack    ),
 	.m1_rty_o(  lm32d_rty    ),
 	.m1_err_o(  lm32d_err    ),
 	// Master2
-	.m2_dat_i(  gnd32  ),
-	.m2_adr_i(  gnd32  ),
-	.m2_sel_i(  gnd4   ),
-	.m2_cyc_i(  gnd    ),
-	.m2_stb_i(  gnd    ),
+	.m2_dat_i(  gc_dat_w  ),
+	.m2_dat_o(  gc_dat_r  ),
+	.m2_adr_i(  gc_adr    ),
+	.m2_we_i (  gc_we     ),
+	.m2_sel_i(  gc_sel    ),
+	.m2_cyc_i(  gc_cyc_o    ),
+	.m2_stb_i(  gc_stb    ),
+	.m2_ack_o(  gc_ack    ),
 	// Master3
 	.m3_dat_i(  gnd32  ),
 	.m3_adr_i(  gnd32  ),
@@ -523,6 +543,74 @@ assign mem_d   = mem_d_t;
 assign sram_d  = sram_d_t;
 assign flash_d  = flash_d_t;
 
+
+//---------------------------------------------------------------------------
+// Graphic card (VGA)
+//---------------------------------------------------------------------------
+
+/*
+	if(rst) begin
+		lm32i_rty <= 1'b0;
+		lm32d_rty <= 1'b0;
+	end
+
+	if(rty == 1 & gc_cyc == 0) begin
+		lm32i_rty <= 1'b1;
+		lm32d_rty <= 1'b1;
+		rty <= 0;
+	end	
+
+	if(gc_cyc == 1)
+		rty <= 1;
+
+	if(rty == 0) begin
+		lm32i_rty <= 1'b0;
+		lm32d_rty <= 1'b0;
+	end	
+end
+*/
+//assign lm32i_cyc_o = lm32i_cyc;
+//assign lm32d_cyc_o = lm32d_cyc;
+
+wb_master_arbitrer arbitrer0 (
+	.clk(clk),
+	.rst(rst),
+
+	.m0_cyc_i(lm32i_cyc),
+	.m1_cyc_i(lm32d_cyc),
+	.m2_cyc_i(gc_cyc),
+	//.m2_cyc_i(gnd),
+	.m3_cyc_i(gnd),
+
+	.m0_cyc_o(lm32i_cyc_o),
+	.m1_cyc_o(lm32d_cyc_o),
+	.m2_cyc_o(gc_cyc_o)
+);
+
+
+graphic_card gc0(
+	.clk_100MHz(clk),
+	.rst(rst),
+
+	.gc_dat_o(gc_dat_w),
+	.gc_adr_o(gc_adr),
+	.gc_cyc_o(gc_cyc),
+	.gc_sel_o(gc_sel),
+	.gc_stb_o(gc_stb),
+	.gc_we_o(gc_we),
+	.gc_dat_i(gc_dat_r),
+	.gc_ack_i(gc_ack),
+
+	.vga_hsync(vga_hsync),
+	.vga_vsync(vga_vsync),
+	.vga_red(vga_red),
+	.vga_green(vga_green),
+	.vga_blue(vga_blue)
+);
+
+
+
+
 //---------------------------------------------------------------------------
 // uart0
 //---------------------------------------------------------------------------
@@ -652,7 +740,7 @@ assign uart0_rxd = (sw[0]) ? uart_rxd  : 1;
 //----------------------------------------------------------------------------
 // Mux LEDs and Push Buttons according to sw[1]
 //----------------------------------------------------------------------------
-wire [7:0] debug_leds = { clk, rst, ~uart_rxd, ~uart_txd, lm32i_stb, lm32i_ack, lm32d_stb, lm32d_ack };
+wire [7:0] debug_leds = { clk, rst, gc_stb, gc_ack, lm32i_stb, lm32i_ack, lm32d_stb, lm32d_ack };
 //wire [7:0] debug_leds = { 4'b0000, norflash0_sel};
 //{ clk, rst, sram0_cyc, ~uart_txd, lm32i_stb, lm32i_ack, lm32d_stb, lm32d_ack };
 wire [7:0] gpio_leds  = gpio0_out[7:0];
