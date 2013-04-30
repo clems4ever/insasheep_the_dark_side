@@ -1,14 +1,14 @@
 OUTPUT_FORMAT("elf32-lm32")
 ENTRY(_start)
 
-__DYNAMIC = 0;
 
 MEMORY {
-  ram    : ORIGIN = 0x40000000, LENGTH = 0x4000 
+  ram    : ORIGIN = 0x40000000, LENGTH = 0x400000 
 }
 
 SECTIONS
 {
+
  .text : 
   {
     _ftext = .;

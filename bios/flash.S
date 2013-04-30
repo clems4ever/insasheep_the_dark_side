@@ -103,11 +103,12 @@ flash_get_status:
 	andi r5, r4, 0x80
 	// While operation jump to waste_time
 	bne r5, r3,  waste_time
-	mv r1, r4
-	
+
+	// Clear status register
 	mvi r3, 0x0050
 	sh (r1+0x0), r3
-
+	
+	mv r1, r4
 
 	//Restores r2 and r3
 	lw r3, (sp+0x4)
