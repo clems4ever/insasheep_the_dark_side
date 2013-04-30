@@ -1,0 +1,1 @@
+../../../../Xilinx_projects/gc/graphic_card.v
