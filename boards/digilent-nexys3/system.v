@@ -55,7 +55,7 @@ module system
 	output 		  vga_vsync,
 	output 		  vga_red,
 	output 		  vga_green,
-	output 		  vga_blue
+	output 		  vga_blue,
 
         // Ethernet
 	output 		  eth0_phy_rstn,
@@ -588,8 +588,8 @@ wb_master_arbitrer arbitrer0 (
 
 	.m0_cyc_i(lm32i_cyc),
 	.m1_cyc_i(lm32d_cyc),
-	.m2_cyc_i(gc_cyc),
-	//.m2_cyc_i(gnd),
+	//.m2_cyc_i(gc_cyc),
+	.m2_cyc_i(gnd),
 	.m3_cyc_i(gnd),
 
 	.m0_cyc_o(lm32i_cyc_o),

@@ -40,12 +40,13 @@ SRC=                                      \
 	../../rtl/wb_conbus/wb_conbus_arb.v   \
 	../../rtl/wb_norflash/norflash16.v   \
 	../../rtl/wb_master_arbitrer/wb_master_arbitrer.v \
-	../../rtl/ethmac/trunk/rtl/verilog/ethmac.v
-#	../../rtl/wb_graphic_card/graphic_card.v \
-#	../../rtl/wb_graphic_card/display_monitor.v \
-#	../../rtl/wb_graphic_card/vga_controller.v  \
-#	../../rtl/wb_uart/uart.v              \
+	../../rtl/ethmac/trunk/rtl/verilog/ethmac.v \
+	../../rtl/wb_graphic_card/graphic_card.v \
+	../../rtl/wb_graphic_card/display_monitor.v \
+	../../rtl/wb_graphic_card/vga_controller.v  
 
+
+#	../../rtl/wb_uart/uart.v              \
 #############################################################################
 # Syntheis constants
 SYNCLEAN=system.bgn system.drc system.mrp system.ngd system.pcf 
