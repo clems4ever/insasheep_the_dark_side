@@ -1,0 +1,443 @@
+readelf.o: ../../src/gcc-4.5.3/binutils/readelf.c config.h \
+ ../../src/gcc-4.5.3/binutils/sysdep.h \
+ ../../src/gcc-4.5.3/binutils/../include/alloca-conf.h \
+ /usr/include/alloca.h /usr/include/features.h /usr/include/stdc-predef.h \
+ /usr/include/x86_64-linux-gnu/bits/predefs.h \
+ /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+ /usr/include/x86_64-linux-gnu/bits/wordsize.h \
+ /usr/include/x86_64-linux-gnu/gnu/stubs.h \
+ /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.7/include/stddef.h \
+ ../../src/gcc-4.5.3/binutils/../include/ansidecl.h /usr/include/stdio.h \
+ /usr/include/x86_64-linux-gnu/bits/types.h \
+ /usr/include/x86_64-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.7/include/stdarg.h \
+ /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
+ /usr/include/x86_64-linux-gnu/bits/sys_errlist.h \
+ /usr/include/x86_64-linux-gnu/bits/stdio.h \
+ /usr/include/x86_64-linux-gnu/bits/stdio2.h \
+ /usr/include/x86_64-linux-gnu/sys/types.h /usr/include/time.h \
+ /usr/include/endian.h /usr/include/x86_64-linux-gnu/bits/endian.h \
+ /usr/include/x86_64-linux-gnu/bits/byteswap.h \
+ /usr/include/x86_64-linux-gnu/bits/byteswap-16.h \
+ /usr/include/x86_64-linux-gnu/sys/select.h \
+ /usr/include/x86_64-linux-gnu/bits/select.h \
+ /usr/include/x86_64-linux-gnu/bits/sigset.h \
+ /usr/include/x86_64-linux-gnu/bits/time.h \
+ /usr/include/x86_64-linux-gnu/bits/select2.h \
+ /usr/include/x86_64-linux-gnu/sys/sysmacros.h \
+ /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h ../bfd/bfdver.h \
+ ../../src/gcc-4.5.3/binutils/../include/fopen-same.h \
+ /usr/include/errno.h /usr/include/x86_64-linux-gnu/bits/errno.h \
+ /usr/include/linux/errno.h /usr/include/x86_64-linux-gnu/asm/errno.h \
+ /usr/include/asm-generic/errno.h /usr/include/asm-generic/errno-base.h \
+ /usr/include/unistd.h /usr/include/x86_64-linux-gnu/bits/posix_opt.h \
+ /usr/include/x86_64-linux-gnu/bits/environments.h \
+ /usr/include/x86_64-linux-gnu/bits/confname.h \
+ ../../src/gcc-4.5.3/binutils/../include/getopt.h \
+ /usr/include/x86_64-linux-gnu/bits/unistd.h /usr/include/string.h \
+ /usr/include/xlocale.h /usr/include/x86_64-linux-gnu/bits/string.h \
+ /usr/include/x86_64-linux-gnu/bits/string2.h /usr/include/stdlib.h \
+ /usr/include/x86_64-linux-gnu/bits/string3.h \
+ /usr/include/x86_64-linux-gnu/bits/waitflags.h \
+ /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
+ /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
+ /usr/include/x86_64-linux-gnu/bits/stdlib.h /usr/include/fcntl.h \
+ /usr/include/x86_64-linux-gnu/bits/fcntl.h \
+ /usr/include/x86_64-linux-gnu/bits/fcntl-linux.h \
+ /usr/include/x86_64-linux-gnu/bits/uio.h \
+ /usr/include/x86_64-linux-gnu/bits/stat.h \
+ /usr/include/x86_64-linux-gnu/bits/fcntl2.h \
+ ../../src/gcc-4.5.3/binutils/../include/binary-io.h \
+ /usr/include/libintl.h /usr/include/locale.h \
+ /usr/include/x86_64-linux-gnu/bits/locale.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.7/include-fixed/limits.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.7/include-fixed/syslimits.h \
+ /usr/include/limits.h /usr/include/x86_64-linux-gnu/bits/posix1_lim.h \
+ /usr/include/x86_64-linux-gnu/bits/local_lim.h \
+ /usr/include/linux/limits.h \
+ /usr/include/x86_64-linux-gnu/bits/posix2_lim.h \
+ /usr/include/x86_64-linux-gnu/bits/xopen_lim.h /usr/include/assert.h \
+ /usr/include/x86_64-linux-gnu/sys/stat.h \
+ /usr/include/x86_64-linux-gnu/bits/timex.h /usr/include/zlib.h \
+ /usr/include/x86_64-linux-gnu/zconf.h ../bfd/bfd.h \
+ ../../src/gcc-4.5.3/binutils/../include/symcat.h \
+ ../../src/gcc-4.5.3/binutils/bucomm.h \
+ ../../src/gcc-4.5.3/binutils/elfcomm.h \
+ ../../src/gcc-4.5.3/binutils/../include/aout/ar.h \
+ ../../src/gcc-4.5.3/binutils/dwarf.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/common.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/external.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/internal.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/h8.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/reloc-macros.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/alpha.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/arc.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/arm.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/avr.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/bfin.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/cr16.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/cris.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/crx.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/d10v.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/d30v.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/dlx.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/fr30.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/frv.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/hppa.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/i386.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/i370.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/i860.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/i960.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/ia64.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/ip2k.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/lm32.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/iq2000.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/m32c.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/m32r.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/m68k.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/m68hc11.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/mcore.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/mep.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/microblaze.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/mips.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/mmix.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/mn10200.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/mn10300.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/moxie.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/mt.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/msp430.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/or32.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/pj.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/ppc.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/ppc64.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/rx.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/s390.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/score.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/sh.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/sparc.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/spu.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/tic6x.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/tic6x-attrs.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/v850.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/vax.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/x86-64.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/xc16x.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/xstormy16.h \
+ ../../src/gcc-4.5.3/binutils/../include/elf/xtensa.h \
+ ../../src/gcc-4.5.3/binutils/../include/libiberty.h \
+ ../../src/gcc-4.5.3/binutils/../include/ansidecl.h \
+ ../../src/gcc-4.5.3/binutils/../include/safe-ctype.h \
+ /usr/include/ctype.h ../../src/gcc-4.5.3/binutils/../include/filenames.h \
+ ../../src/gcc-4.5.3/binutils/unwind-ia64.h
+
+config.h:
+
+../../src/gcc-4.5.3/binutils/sysdep.h:
+
+../../src/gcc-4.5.3/binutils/../include/alloca-conf.h:
+
+/usr/include/alloca.h:
+
+/usr/include/features.h:
+
+/usr/include/stdc-predef.h:
+
+/usr/include/x86_64-linux-gnu/bits/predefs.h:
+
+/usr/include/x86_64-linux-gnu/sys/cdefs.h:
+
+/usr/include/x86_64-linux-gnu/bits/wordsize.h:
+
+/usr/include/x86_64-linux-gnu/gnu/stubs.h:
+
+/usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.7/include/stddef.h:
+
+../../src/gcc-4.5.3/binutils/../include/ansidecl.h:
+
+/usr/include/stdio.h:
+
+/usr/include/x86_64-linux-gnu/bits/types.h:
+
+/usr/include/x86_64-linux-gnu/bits/typesizes.h:
+
+/usr/include/libio.h:
+
+/usr/include/_G_config.h:
+
+/usr/include/wchar.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.7/include/stdarg.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdio_lim.h:
+
+/usr/include/x86_64-linux-gnu/bits/sys_errlist.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdio.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:
+
+/usr/include/x86_64-linux-gnu/sys/types.h:
+
+/usr/include/time.h:
+
+/usr/include/endian.h:
+
+/usr/include/x86_64-linux-gnu/bits/endian.h:
+
+/usr/include/x86_64-linux-gnu/bits/byteswap.h:
+
+/usr/include/x86_64-linux-gnu/bits/byteswap-16.h:
+
+/usr/include/x86_64-linux-gnu/sys/select.h:
+
+/usr/include/x86_64-linux-gnu/bits/select.h:
+
+/usr/include/x86_64-linux-gnu/bits/sigset.h:
+
+/usr/include/x86_64-linux-gnu/bits/time.h:
+
+/usr/include/x86_64-linux-gnu/bits/select2.h:
+
+/usr/include/x86_64-linux-gnu/sys/sysmacros.h:
+
+/usr/include/x86_64-linux-gnu/bits/pthreadtypes.h:
+
+../bfd/bfdver.h:
+
+../../src/gcc-4.5.3/binutils/../include/fopen-same.h:
+
+/usr/include/errno.h:
+
+/usr/include/x86_64-linux-gnu/bits/errno.h:
+
+/usr/include/linux/errno.h:
+
+/usr/include/x86_64-linux-gnu/asm/errno.h:
+
+/usr/include/asm-generic/errno.h:
+
+/usr/include/asm-generic/errno-base.h:
+
+/usr/include/unistd.h:
+
+/usr/include/x86_64-linux-gnu/bits/posix_opt.h:
+
+/usr/include/x86_64-linux-gnu/bits/environments.h:
+
+/usr/include/x86_64-linux-gnu/bits/confname.h:
+
+../../src/gcc-4.5.3/binutils/../include/getopt.h:
+
+/usr/include/x86_64-linux-gnu/bits/unistd.h:
+
+/usr/include/string.h:
+
+/usr/include/xlocale.h:
+
+/usr/include/x86_64-linux-gnu/bits/string.h:
+
+/usr/include/x86_64-linux-gnu/bits/string2.h:
+
+/usr/include/stdlib.h:
+
+/usr/include/x86_64-linux-gnu/bits/string3.h:
+
+/usr/include/x86_64-linux-gnu/bits/waitflags.h:
+
+/usr/include/x86_64-linux-gnu/bits/waitstatus.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdlib-float.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdlib.h:
+
+/usr/include/fcntl.h:
+
+/usr/include/x86_64-linux-gnu/bits/fcntl.h:
+
+/usr/include/x86_64-linux-gnu/bits/fcntl-linux.h:
+
+/usr/include/x86_64-linux-gnu/bits/uio.h:
+
+/usr/include/x86_64-linux-gnu/bits/stat.h:
+
+/usr/include/x86_64-linux-gnu/bits/fcntl2.h:
+
+../../src/gcc-4.5.3/binutils/../include/binary-io.h:
+
+/usr/include/libintl.h:
+
+/usr/include/locale.h:
+
+/usr/include/x86_64-linux-gnu/bits/locale.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.7/include-fixed/limits.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.7/include-fixed/syslimits.h:
+
+/usr/include/limits.h:
+
+/usr/include/x86_64-linux-gnu/bits/posix1_lim.h:
+
+/usr/include/x86_64-linux-gnu/bits/local_lim.h:
+
+/usr/include/linux/limits.h:
+
+/usr/include/x86_64-linux-gnu/bits/posix2_lim.h:
+
+/usr/include/x86_64-linux-gnu/bits/xopen_lim.h:
+
+/usr/include/assert.h:
+
+/usr/include/x86_64-linux-gnu/sys/stat.h:
+
+/usr/include/x86_64-linux-gnu/bits/timex.h:
+
+/usr/include/zlib.h:
+
+/usr/include/x86_64-linux-gnu/zconf.h:
+
+../bfd/bfd.h:
+
+../../src/gcc-4.5.3/binutils/../include/symcat.h:
+
+../../src/gcc-4.5.3/binutils/bucomm.h:
+
+../../src/gcc-4.5.3/binutils/elfcomm.h:
+
+../../src/gcc-4.5.3/binutils/../include/aout/ar.h:
+
+../../src/gcc-4.5.3/binutils/dwarf.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/common.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/external.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/internal.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/h8.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/reloc-macros.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/alpha.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/arc.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/arm.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/avr.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/bfin.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/cr16.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/cris.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/crx.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/d10v.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/d30v.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/dlx.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/fr30.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/frv.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/hppa.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/i386.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/i370.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/i860.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/i960.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/ia64.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/ip2k.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/lm32.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/iq2000.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/m32c.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/m32r.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/m68k.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/m68hc11.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/mcore.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/mep.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/microblaze.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/mips.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/mmix.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/mn10200.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/mn10300.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/moxie.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/mt.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/msp430.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/or32.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/pj.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/ppc.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/ppc64.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/rx.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/s390.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/score.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/sh.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/sparc.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/spu.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/tic6x.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/tic6x-attrs.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/v850.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/vax.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/x86-64.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/xc16x.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/xstormy16.h:
+
+../../src/gcc-4.5.3/binutils/../include/elf/xtensa.h:
+
+../../src/gcc-4.5.3/binutils/../include/libiberty.h:
+
+../../src/gcc-4.5.3/binutils/../include/ansidecl.h:
+
+../../src/gcc-4.5.3/binutils/../include/safe-ctype.h:
+
+/usr/include/ctype.h:
+
+../../src/gcc-4.5.3/binutils/../include/filenames.h:
+
+../../src/gcc-4.5.3/binutils/unwind-ia64.h:

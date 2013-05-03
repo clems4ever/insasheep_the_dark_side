@@ -1,0 +1,55 @@
+gdb.o: ../../../src/gcc-4.5.3/gdb/gdb/gdb.c \
+ ../../../src/gcc-4.5.3/gdb/gdb/defs.h config.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/../include/ansidecl.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/gdb_locale.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/gdb_wchar.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/../include/gdb/signals.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/../include/libiberty.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/../include/ansidecl.h ../bfd/bfd.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/../include/symcat.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/ui-file.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/../include/fopen-bin.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/gdbarch.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/main.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/gdb_string.h gnulib/string.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/interps.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/exceptions.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/ui-out.h
+
+../../../src/gcc-4.5.3/gdb/gdb/defs.h:
+
+config.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/../include/ansidecl.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/gdb_locale.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/gdb_wchar.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/../include/gdb/signals.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/../include/libiberty.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/../include/ansidecl.h:
+
+../bfd/bfd.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/../include/symcat.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/ui-file.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/../include/fopen-bin.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/gdbarch.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/main.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/gdb_string.h:
+
+gnulib/string.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/interps.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/exceptions.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/ui-out.h:

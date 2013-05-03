@@ -1,0 +1,1 @@
+is-strip.o: ../../src/gcc-4.5.3/binutils/is-strip.c

@@ -1,0 +1,51 @@
+files.o: ../../src/gcc-4.5.3/libcpp/files.c config.h \
+ ../../src/gcc-4.5.3/libcpp/system.h \
+ ../../src/gcc-4.5.3/libcpp/../include/filenames.h \
+ ../../src/gcc-4.5.3/libcpp/../include/libiberty.h \
+ ../../src/gcc-4.5.3/libcpp/../include/ansidecl.h \
+ ../../src/gcc-4.5.3/libcpp/../include/safe-ctype.h \
+ ../../src/gcc-4.5.3/libcpp/include/cpplib.h \
+ ../../src/gcc-4.5.3/libcpp/include/symtab.h \
+ ../../src/gcc-4.5.3/libcpp/../include/obstack.h \
+ ../../src/gcc-4.5.3/libcpp/include/line-map.h \
+ ../../src/gcc-4.5.3/libcpp/internal.h \
+ ../../src/gcc-4.5.3/libcpp/include/symtab.h \
+ ../../src/gcc-4.5.3/libcpp/include/cpp-id-data.h \
+ ../../src/gcc-4.5.3/libcpp/include/cpplib.h \
+ ../../src/gcc-4.5.3/libcpp/include/mkdeps.h \
+ ../../src/gcc-4.5.3/libcpp/../include/hashtab.h \
+ ../../src/gcc-4.5.3/libcpp/../include/md5.h
+
+config.h:
+
+../../src/gcc-4.5.3/libcpp/system.h:
+
+../../src/gcc-4.5.3/libcpp/../include/filenames.h:
+
+../../src/gcc-4.5.3/libcpp/../include/libiberty.h:
+
+../../src/gcc-4.5.3/libcpp/../include/ansidecl.h:
+
+../../src/gcc-4.5.3/libcpp/../include/safe-ctype.h:
+
+../../src/gcc-4.5.3/libcpp/include/cpplib.h:
+
+../../src/gcc-4.5.3/libcpp/include/symtab.h:
+
+../../src/gcc-4.5.3/libcpp/../include/obstack.h:
+
+../../src/gcc-4.5.3/libcpp/include/line-map.h:
+
+../../src/gcc-4.5.3/libcpp/internal.h:
+
+../../src/gcc-4.5.3/libcpp/include/symtab.h:
+
+../../src/gcc-4.5.3/libcpp/include/cpp-id-data.h:
+
+../../src/gcc-4.5.3/libcpp/include/cpplib.h:
+
+../../src/gcc-4.5.3/libcpp/include/mkdeps.h:
+
+../../src/gcc-4.5.3/libcpp/../include/hashtab.h:
+
+../../src/gcc-4.5.3/libcpp/../include/md5.h:

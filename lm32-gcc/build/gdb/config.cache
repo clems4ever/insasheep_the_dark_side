@@ -1,0 +1,165 @@
+# This file is a shell script that caches the results of configure
+# tests run on this system so they can be shared between configure
+# scripts and configure runs, see configure's option --config-cache.
+# It is not useful on other systems.  If it contains results you don't
+# want to keep, you may remove or edit it.
+#
+# config.status only pays attention to the cache file if you give it
+# the --recheck option to rerun configure.
+#
+# `ac_cv_env_foo' variables (set or unset) will be overridden when
+# loading this file, other *unset* `ac_cv_foo' will be assigned the
+# following values.
+
+ac_cv_build=${ac_cv_build=x86_64-unknown-linux-gnu}
+ac_cv_c_compiler_gnu=${ac_cv_c_compiler_gnu=yes}
+ac_cv_cxx_compiler_gnu=${ac_cv_cxx_compiler_gnu=yes}
+ac_cv_env_AR_FOR_TARGET_set=set
+ac_cv_env_AR_FOR_TARGET_value=/home/matt/Documents/Studies/4IRT/insasheep_the_dark_side/lm32-gcc/build/./binutils/ar
+ac_cv_env_AR_set=set
+ac_cv_env_AR_value=ar
+ac_cv_env_AS_FOR_TARGET_set=set
+ac_cv_env_AS_FOR_TARGET_value=/home/matt/Documents/Studies/4IRT/insasheep_the_dark_side/lm32-gcc/build/./gas/as-new
+ac_cv_env_AS_set=set
+ac_cv_env_AS_value=as
+ac_cv_env_CCC_set=
+ac_cv_env_CCC_value=
+ac_cv_env_CC_FOR_TARGET_set=set
+ac_cv_env_CC_FOR_TARGET_value='/home/matt/Documents/Studies/4IRT/insasheep_the_dark_side/lm32-gcc/build/./gcc/xgcc -B/home/matt/Documents/Studies/4IRT/insasheep_the_dark_side/lm32-gcc/build/./gcc/'
+ac_cv_env_CC_set=set
+ac_cv_env_CC_value=gcc
+ac_cv_env_CFLAGS_set=set
+ac_cv_env_CFLAGS_value='-g -O2'
+ac_cv_env_CPPFLAGS_set=
+ac_cv_env_CPPFLAGS_value=
+ac_cv_env_CPP_set=
+ac_cv_env_CPP_value=
+ac_cv_env_CXXFLAGS_set=set
+ac_cv_env_CXXFLAGS_value='-g -O2'
+ac_cv_env_CXX_FOR_TARGET_set=set
+ac_cv_env_CXX_FOR_TARGET_value=lm32-elf-c++
+ac_cv_env_CXX_set=set
+ac_cv_env_CXX_value=g++
+ac_cv_env_DLLTOOL_FOR_TARGET_set=set
+ac_cv_env_DLLTOOL_FOR_TARGET_value=/home/matt/Documents/Studies/4IRT/insasheep_the_dark_side/lm32-gcc/build/./binutils/dlltool
+ac_cv_env_DLLTOOL_set=set
+ac_cv_env_DLLTOOL_value=dlltool
+ac_cv_env_GCC_FOR_TARGET_set=set
+ac_cv_env_GCC_FOR_TARGET_value=' /home/matt/Documents/Studies/4IRT/insasheep_the_dark_side/lm32-gcc/build/./gcc/xgcc -B/home/matt/Documents/Studies/4IRT/insasheep_the_dark_side/lm32-gcc/build/./gcc/'
+ac_cv_env_GCJ_FOR_TARGET_set=set
+ac_cv_env_GCJ_FOR_TARGET_value=lm32-elf-gcj
+ac_cv_env_GFORTRAN_FOR_TARGET_set=set
+ac_cv_env_GFORTRAN_FOR_TARGET_value=lm32-elf-gfortran
+ac_cv_env_LDFLAGS_set=set
+ac_cv_env_LDFLAGS_value=' '
+ac_cv_env_LD_FOR_TARGET_set=set
+ac_cv_env_LD_FOR_TARGET_value=/home/matt/Documents/Studies/4IRT/insasheep_the_dark_side/lm32-gcc/build/./ld/ld-new
+ac_cv_env_LD_set=set
+ac_cv_env_LD_value=ld
+ac_cv_env_LIBS_set=
+ac_cv_env_LIBS_value=
+ac_cv_env_LIPO_FOR_TARGET_set=set
+ac_cv_env_LIPO_FOR_TARGET_value=lm32-elf-lipo
+ac_cv_env_LIPO_set=
+ac_cv_env_LIPO_value=
+ac_cv_env_NM_FOR_TARGET_set=set
+ac_cv_env_NM_FOR_TARGET_value=/home/matt/Documents/Studies/4IRT/insasheep_the_dark_side/lm32-gcc/build/./binutils/nm-new
+ac_cv_env_NM_set=set
+ac_cv_env_NM_value=nm
+ac_cv_env_OBJCOPY_set=set
+ac_cv_env_OBJCOPY_value=
+ac_cv_env_OBJDUMP_FOR_TARGET_set=set
+ac_cv_env_OBJDUMP_FOR_TARGET_value=/home/matt/Documents/Studies/4IRT/insasheep_the_dark_side/lm32-gcc/build/./binutils/objdump
+ac_cv_env_OBJDUMP_set=set
+ac_cv_env_OBJDUMP_value=objdump
+ac_cv_env_RANLIB_FOR_TARGET_set=set
+ac_cv_env_RANLIB_FOR_TARGET_value=/home/matt/Documents/Studies/4IRT/insasheep_the_dark_side/lm32-gcc/build/./binutils/ranlib
+ac_cv_env_RANLIB_set=set
+ac_cv_env_RANLIB_value=ranlib
+ac_cv_env_STRIP_FOR_TARGET_set=set
+ac_cv_env_STRIP_FOR_TARGET_value=/home/matt/Documents/Studies/4IRT/insasheep_the_dark_side/lm32-gcc/build/./binutils/strip
+ac_cv_env_STRIP_set=
+ac_cv_env_STRIP_value=
+ac_cv_env_WINDMC_FOR_TARGET_set=set
+ac_cv_env_WINDMC_FOR_TARGET_value=/home/matt/Documents/Studies/4IRT/insasheep_the_dark_side/lm32-gcc/build/./binutils/windmc
+ac_cv_env_WINDMC_set=set
+ac_cv_env_WINDMC_value=windmc
+ac_cv_env_WINDRES_FOR_TARGET_set=set
+ac_cv_env_WINDRES_FOR_TARGET_value=/home/matt/Documents/Studies/4IRT/insasheep_the_dark_side/lm32-gcc/build/./binutils/windres
+ac_cv_env_WINDRES_set=set
+ac_cv_env_WINDRES_value=windres
+ac_cv_env_build_alias_set=set
+ac_cv_env_build_alias_value=x86_64-unknown-linux-gnu
+ac_cv_env_host_alias_set=set
+ac_cv_env_host_alias_value=x86_64-unknown-linux-gnu
+ac_cv_env_target_alias_set=set
+ac_cv_env_target_alias_value=lm32-elf
+ac_cv_header_gelf_h=${ac_cv_header_gelf_h=no}
+ac_cv_header_inttypes_h=${ac_cv_header_inttypes_h=yes}
+ac_cv_header_libelf_gelf_h=${ac_cv_header_libelf_gelf_h=no}
+ac_cv_header_libelf_h=${ac_cv_header_libelf_h=no}
+ac_cv_header_libelf_libelf_h=${ac_cv_header_libelf_libelf_h=no}
+ac_cv_header_memory_h=${ac_cv_header_memory_h=yes}
+ac_cv_header_stdc=${ac_cv_header_stdc=yes}
+ac_cv_header_stdint_h=${ac_cv_header_stdint_h=yes}
+ac_cv_header_stdlib_h=${ac_cv_header_stdlib_h=yes}
+ac_cv_header_string_h=${ac_cv_header_string_h=yes}
+ac_cv_header_strings_h=${ac_cv_header_strings_h=yes}
+ac_cv_header_sys_stat_h=${ac_cv_header_sys_stat_h=yes}
+ac_cv_header_sys_types_h=${ac_cv_header_sys_types_h=yes}
+ac_cv_header_unistd_h=${ac_cv_header_unistd_h=yes}
+ac_cv_host=${ac_cv_host=x86_64-unknown-linux-gnu}
+ac_cv_objext=${ac_cv_objext=o}
+ac_cv_path_EGREP=${ac_cv_path_EGREP='/bin/grep -E'}
+ac_cv_path_GREP=${ac_cv_path_GREP=/bin/grep}
+ac_cv_path_SED=${ac_cv_path_SED=/bin/sed}
+ac_cv_prog_AR=${ac_cv_prog_AR=ar}
+ac_cv_prog_AR_FOR_TARGET=${ac_cv_prog_AR_FOR_TARGET=/home/matt/Documents/Studies/4IRT/insasheep_the_dark_side/lm32-gcc/build/./binutils/ar}
+ac_cv_prog_AS=${ac_cv_prog_AS=as}
+ac_cv_prog_AS_FOR_TARGET=${ac_cv_prog_AS_FOR_TARGET=/home/matt/Documents/Studies/4IRT/insasheep_the_dark_side/lm32-gcc/build/./gas/as-new}
+ac_cv_prog_AWK=${ac_cv_prog_AWK=gawk}
+ac_cv_prog_BISON=${ac_cv_prog_BISON=bison}
+ac_cv_prog_CC=${ac_cv_prog_CC=gcc}
+ac_cv_prog_CC_FOR_TARGET=${ac_cv_prog_CC_FOR_TARGET='/home/matt/Documents/Studies/4IRT/insasheep_the_dark_side/lm32-gcc/build/./gcc/xgcc -B/home/matt/Documents/Studies/4IRT/insasheep_the_dark_side/lm32-gcc/build/./gcc/'}
+ac_cv_prog_CPP=${ac_cv_prog_CPP='gcc -E'}
+ac_cv_prog_CXX_FOR_TARGET=${ac_cv_prog_CXX_FOR_TARGET=lm32-elf-c++}
+ac_cv_prog_DLLTOOL=${ac_cv_prog_DLLTOOL=dlltool}
+ac_cv_prog_DLLTOOL_FOR_TARGET=${ac_cv_prog_DLLTOOL_FOR_TARGET=/home/matt/Documents/Studies/4IRT/insasheep_the_dark_side/lm32-gcc/build/./binutils/dlltool}
+ac_cv_prog_EXPECT=${ac_cv_prog_EXPECT=expect}
+ac_cv_prog_FLEX=${ac_cv_prog_FLEX=flex}
+ac_cv_prog_GCC_FOR_TARGET=${ac_cv_prog_GCC_FOR_TARGET=' /home/matt/Documents/Studies/4IRT/insasheep_the_dark_side/lm32-gcc/build/./gcc/xgcc -B/home/matt/Documents/Studies/4IRT/insasheep_the_dark_side/lm32-gcc/build/./gcc/'}
+ac_cv_prog_GCJ_FOR_TARGET=${ac_cv_prog_GCJ_FOR_TARGET=lm32-elf-gcj}
+ac_cv_prog_GFORTRAN_FOR_TARGET=${ac_cv_prog_GFORTRAN_FOR_TARGET=lm32-elf-gfortran}
+ac_cv_prog_GNATBIND=${ac_cv_prog_GNATBIND=no}
+ac_cv_prog_GNATMAKE=${ac_cv_prog_GNATMAKE=no}
+ac_cv_prog_LD=${ac_cv_prog_LD=ld}
+ac_cv_prog_LD_FOR_TARGET=${ac_cv_prog_LD_FOR_TARGET=/home/matt/Documents/Studies/4IRT/insasheep_the_dark_side/lm32-gcc/build/./ld/ld-new}
+ac_cv_prog_LEX=${ac_cv_prog_LEX=flex}
+ac_cv_prog_LIPO_FOR_TARGET=${ac_cv_prog_LIPO_FOR_TARGET=lm32-elf-lipo}
+ac_cv_prog_M4=${ac_cv_prog_M4=m4}
+ac_cv_prog_MAKEINFO=${ac_cv_prog_MAKEINFO='makeinfo --split-size=5000000'}
+ac_cv_prog_NM=${ac_cv_prog_NM=nm}
+ac_cv_prog_NM_FOR_TARGET=${ac_cv_prog_NM_FOR_TARGET=/home/matt/Documents/Studies/4IRT/insasheep_the_dark_side/lm32-gcc/build/./binutils/nm-new}
+ac_cv_prog_OBJCOPY=${ac_cv_prog_OBJCOPY=objcopy}
+ac_cv_prog_OBJDUMP=${ac_cv_prog_OBJDUMP=objdump}
+ac_cv_prog_OBJDUMP_FOR_TARGET=${ac_cv_prog_OBJDUMP_FOR_TARGET=/home/matt/Documents/Studies/4IRT/insasheep_the_dark_side/lm32-gcc/build/./binutils/objdump}
+ac_cv_prog_RANLIB=${ac_cv_prog_RANLIB=ranlib}
+ac_cv_prog_RANLIB_FOR_TARGET=${ac_cv_prog_RANLIB_FOR_TARGET=/home/matt/Documents/Studies/4IRT/insasheep_the_dark_side/lm32-gcc/build/./binutils/ranlib}
+ac_cv_prog_RUNTEST=${ac_cv_prog_RUNTEST=runtest}
+ac_cv_prog_STRIP=${ac_cv_prog_STRIP=strip}
+ac_cv_prog_STRIP_FOR_TARGET=${ac_cv_prog_STRIP_FOR_TARGET=/home/matt/Documents/Studies/4IRT/insasheep_the_dark_side/lm32-gcc/build/./binutils/strip}
+ac_cv_prog_WINDMC=${ac_cv_prog_WINDMC=windmc}
+ac_cv_prog_WINDMC_FOR_TARGET=${ac_cv_prog_WINDMC_FOR_TARGET=/home/matt/Documents/Studies/4IRT/insasheep_the_dark_side/lm32-gcc/build/./binutils/windmc}
+ac_cv_prog_WINDRES=${ac_cv_prog_WINDRES=windres}
+ac_cv_prog_WINDRES_FOR_TARGET=${ac_cv_prog_WINDRES_FOR_TARGET=/home/matt/Documents/Studies/4IRT/insasheep_the_dark_side/lm32-gcc/build/./binutils/windres}
+ac_cv_prog_YACC=${ac_cv_prog_YACC='bison -y'}
+ac_cv_prog_cc_c89=${ac_cv_prog_cc_c89=}
+ac_cv_prog_cc_g=${ac_cv_prog_cc_g=yes}
+ac_cv_prog_cxx_g=${ac_cv_prog_cxx_g=yes}
+ac_cv_target=${ac_cv_target=lm32-unknown-elf}
+acx_cv_cc_gcc_supports_ada=${acx_cv_cc_gcc_supports_ada=no}
+acx_cv_prog_LN=${acx_cv_prog_LN=ln}
+gcc_cv_prog_cmp_skip=${gcc_cv_prog_cmp_skip='cmp --ignore-initial=16 $$f1 $$f2'}
+gcc_cv_tool_dirs=${gcc_cv_tool_dirs=}
+gcc_cv_tool_prefix=${gcc_cv_tool_prefix=/usr/mico32}
+lt_cv_objdir=${lt_cv_objdir=.libs}

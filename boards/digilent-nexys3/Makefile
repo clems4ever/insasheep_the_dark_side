@@ -39,10 +39,11 @@ SRC=                                      \
 	../../rtl/wb_conbus/wb_conbus_top.v   \
 	../../rtl/wb_conbus/wb_conbus_arb.v   \
 	../../rtl/wb_norflash/norflash16.v   \
-	../../rtl/wb_graphic_card/graphic_card.v \
-	../../rtl/wb_graphic_card/display_monitor.v \
-	../../rtl/wb_graphic_card/vga_controller.v  \
-	../../rtl/wb_master_arbitrer/wb_master_arbitrer.v 
+	../../rtl/wb_master_arbitrer/wb_master_arbitrer.v \
+	../../rtl/ethmac/trunk/rtl/verilog/ethmac.v
+#	../../rtl/wb_graphic_card/graphic_card.v \
+#	../../rtl/wb_graphic_card/display_monitor.v \
+#	../../rtl/wb_graphic_card/vga_controller.v  \
 #	../../rtl/wb_uart/uart.v              \
 
 #############################################################################
@@ -67,7 +68,7 @@ CVER=cver
 GTKWAVE=gtkwave
 IVERILOG=iverilog
 VVP=vvp
-	
+
 #############################################################################
 # 
 sim: system_tb.vcd

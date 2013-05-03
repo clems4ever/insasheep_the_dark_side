@@ -20,42 +20,62 @@ module system
 	parameter   clk_freq         = 100000000,
 	parameter   uart_baud_rate   = 115200
 ) (
-	input                   clk,
+	input 		  clk,
 	// Debug
-	output            [7:0] led,
-	input             [3:0] btn,
-	input             [3:0] sw,
+	output [7:0] 	  led,
+	input [3:0] 	  btn,
+	input [3:0] 	  sw,
 	// Uart
-	input                   uart_rxd,
-	output                  uart_txd,
+	input 		  uart_rxd,
+	output 		  uart_txd,
 
 	// Memory (shared between parallel flash and PSRAM)
-	output reg          [25:0] mem_adr,		//22:0 PSRAM 25:0 PCM
-	inout            [15:0] mem_d,		//15:0 Databits for PSRAM and PCM
+	output reg [25:0] mem_adr, //22:0 PSRAM 25:0 PCM
+	inout [15:0] 	  mem_d, //15:0 Databits for PSRAM and PCM
 										//2:0  DQ[3:1] of SPI Flash
-	output reg					mem_oe,
-	output reg 		     		mem_we,
+	output reg 	  mem_oe,
+	output reg 	  mem_we,
 	//output					mem_clk,
 	//output					mem_adv,
 	//output					mem_wait,
 
 
 	//RAM-only control signals
-	output					sram_ce_n,
-	output                  sram_ub,
-	output                  sram_lb,
+	output 		  sram_ce_n,
+	output 		  sram_ub,
+	output 		  sram_lb,
 	//output 					sram_cre,
 
 
 	// Flash pins
-	output 					flash_ce_n,
-	output					flash_rst_n,
+	output 		  flash_ce_n,
+	output 		  flash_rst_n,
 
-	output 					vga_hsync,
-	output 					vga_vsync,
-	output 					vga_red,
-	output 					vga_green,
-	output 					vga_blue
+	output 		  vga_hsync,
+	output 		  vga_vsync,
+	output 		  vga_red,
+	output 		  vga_green,
+	output 		  vga_blue
+
+        // Ethernet
+	output 		  eth0_phy_rstn,
+        // 1 pin non connecte pour l'instant, je sais pas a quoi il sert -> PhyClk25Mhz (N4 sur la carte)
+   
+	output [3:0] 	  eth0_mtxd_pad_o,
+	output 		  eth0_mtxen_pad_o,
+	output 		  eth0_mtxerr_pad_o,
+	input 		  eth0_mtx_clk_pad_i,
+
+	input [3:0] 	  eth0_mrxd_pad_i,
+	input 		  eth0_mrxdv_pad_i,
+	input 		  eth0_mrxerr_pad_i,
+	input 		  eth0_mrx_clk_pad_i,
+   
+	input 		  eth0_mcoll_pad_i,
+	input 		  eth0_mcrs_pad_i,
+	
+	inout 		  eth0_md_pad_d,
+	input 		  eth0_mdc_pad_o		  
 );
 
 wire         rst;
@@ -74,8 +94,9 @@ wire [31:0]  lm32i_adr,
              gpio0_adr,
              bram0_adr,
              sram0_adr,
-			 gc_adr,
-			 norflash0_adr;
+	     gc_adr,
+	     norflash0_adr,
+	     eth0_adr;
 
 wire [31:0]  lm32i_dat_r,
              lm32i_dat_w,
@@ -91,10 +112,12 @@ wire [31:0]  lm32i_dat_r,
              bram0_dat_w,
              sram0_dat_r,
              sram0_dat_w,
-			 gc_dat_r,
-			 gc_dat_w,
-			 norflash0_dat_r,
-			 norflash0_dat_w;
+	     gc_dat_r,
+	     gc_dat_w,
+	     norflash0_dat_r,
+	     norflash0_dat_w,
+	     eth0_dat_r,
+	     eth0_dat_w;
 
 wire [3:0]   lm32i_sel,
              lm32d_sel,
@@ -103,8 +126,9 @@ wire [3:0]   lm32i_sel,
              gpio0_sel,
              bram0_sel,
              sram0_sel,
-			 gc_sel,
-			 norflash0_sel;
+	     gc_sel,
+	     norflash0_sel,
+	     eth0_sel;
 			 
 wire         lm32i_we,
              lm32d_we,
@@ -113,8 +137,9 @@ wire         lm32i_we,
              gpio0_we,
              bram0_we,
              sram0_we,
-			 gc_we,
-			 norflash0_we;
+	     gc_we,
+	     norflash0_we,
+	     eth0_we;
 
 wire         lm32i_cyc,
              lm32d_cyc,
@@ -123,11 +148,12 @@ wire         lm32i_cyc,
              gpio0_cyc,
              bram0_cyc,
              sram0_cyc,
-			 gc_cyc,
-			 norflash0_cyc,
-			 lm32i_cyc_o,
-			 lm32d_cyc_o,
-			 gc_cyc_o;
+	     gc_cyc,
+	     norflash0_cyc,
+	     lm32i_cyc_o,
+	     lm32d_cyc_o,
+	     gc_cyc_o,
+	     eth0_cyc;
 
 wire         lm32i_stb,
              lm32d_stb,
@@ -136,8 +162,9 @@ wire         lm32i_stb,
              gpio0_stb,
              bram0_stb,
              sram0_stb,
-			 gc_stb,
-			 norflash0_stb;
+	     gc_stb,
+	     norflash0_stb,
+	     eth0_stb;
 
 wire         lm32i_ack,
              lm32d_ack,
@@ -146,8 +173,9 @@ wire         lm32i_ack,
              gpio0_ack,
              bram0_ack,
              sram0_ack,
-			 gc_ack,
-			 norflash0_ack;
+	     gc_ack,
+	     norflash0_ack
+	     eth0_ack;
 
 wire         lm32i_rty,
              lm32d_rty;
@@ -326,8 +354,14 @@ wb_conbus_top #(
 	.s6_err_i(  gnd    ),
 	.s6_rty_i(  gnd    ),
 	// Slave7
-	.s7_dat_i(  gnd32  ),
-	.s7_ack_i(  gnd    ),
+	.s7_dat_i(  eth0_dat_r  ),
+	.s7_dat_o(  eth0_dat_w  ),
+	.s7_adr_o(  eth0_adr    ),
+	.s7_sel_o(  eth0_sel    ),
+	.s7_we_o(   eth0_we     ),
+	.s7_cyc_o(  eth0_cyc    ),
+	.s7_stb_o(  eth0_stb    ),
+	.s7_ack_i(  eth0_ack    ),
 	.s7_err_i(  gnd    ),
 	.s7_rty_i(  gnd    )
 );
@@ -584,8 +618,69 @@ graphic_card gc0(
 	.vga_blue(vga_blue)
 );
 
+//---------------------------------------------------------------------------
+// Ethernet
+//---------------------------------------------------------------------------
 
+   wire eth0_md_padoe_o;
+   assign eth0_phy_rstn = ~rst;
+   assign eth0_md_pad_d = (eth0_md_padoe_o) ? eth0_md_pad_o : eth0_md_pad_i;
 
+ethmac eth0(
+  // WISHBONE common
+  .wb_clk_i( clk ),
+  .wb_rst_i( rst ),
+  .wb_dat_i( eth0_dat_w),
+  .wb_dat_o( eth0_dat_r), 
+    
+  // WISHBONE slave
+  .wb_adr_i( eth0_adr ),
+  .wb_sel_i( eth0_sel ),
+  .wb_we_i( eth0_we ),
+  .wb_cyc_i( eth0_cyc ),
+  .wb_stb_i( eth0_stb ),
+  .wb_ack_o( eth0_ack ),
+  
+  .wb_err_o(),
+
+  // WISHBONE master
+  .m_wb_adr_o(),
+  .m_wb_sel_o(),
+  .m_wb_we_o(), 
+  .m_wb_dat_o(),
+  .m_wb_dat_i(),
+  .m_wb_cyc_o(), 
+  .m_wb_stb_o(),
+  .m_wb_ack_i(),
+  .m_wb_err_i(), 
+
+  .m_wb_cti_o(),
+  .m_wb_bte_o(), 
+
+  //TX
+  .mtx_clk_pad_i(eth0_mtx_clk_pad_i), // Transmit clock (from PHY)
+  .mtxd_pad_o(eth0_mtxd_pad_o), // [3:0] Transmit nibble (to PHY)
+  .mtxen_pad_o(eth0_mtxen_pad_o), // Transmit enable (to PHY)
+  .mtxerr_pad_o(eth0_mtxerr_pad_o), // Transmit error (to PHY)
+
+  //RX
+  .mrx_clk_pad_i(eth0_mrx_clk_pad_i), // Receive clock (from PHY)
+  .mrxd_pad_i(eth0_mrxd_pad_i), // [3:0] Receive nibble (from PHY)
+  .mrxdv_pad_i(eth0_mrxdv_pad_i), // Receive data valid (from PHY)
+  .mrxerr_pad_i(eth0_mrxerr_pad_i), // Receive data error (from PHY)
+
+  // Common Tx and Rx
+  .mcoll_pad_i(eth0_mcoll_pad_i), // Collision (from PHY)
+  .mcrs_pad_i(eth0_mcrs_pad_i), // Carrier sense (from PHY)
+ 
+  // MII Management interface
+  .mdc_pad_o(eth0_mdc_pad_o), // MII Management data clock (to PHY)
+  .md_pad_i(eth0_md_pad_i), // MII data input (from I/O cell)
+  .md_pad_o(eth0_md_pad_o), // MII data output (to I/O cell)
+  .md_padoe_o(eth0_md_padoe_o), // MII data output enable (to I/O cell)
+
+  .int_o() // Interrupt output -> pas besoin ici
+);
 
 //---------------------------------------------------------------------------
 // uart0

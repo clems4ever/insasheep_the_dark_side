@@ -1,0 +1,10 @@
+dir .
+dir ../../src/gcc-4.5.3/gcc
+dir ../../src/gcc-4.5.3/gcc/ada
+dir ../../src/gcc-4.5.3/gcc/cp
+dir ../../src/gcc-4.5.3/gcc/fortran
+dir ../../src/gcc-4.5.3/gcc/java
+dir ../../src/gcc-4.5.3/gcc/lto
+dir ../../src/gcc-4.5.3/gcc/objc
+dir ../../src/gcc-4.5.3/gcc/objcp
+source ../../src/gcc-4.5.3/gcc/gdbinit.in

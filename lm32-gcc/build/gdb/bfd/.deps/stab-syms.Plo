@@ -1,0 +1,21 @@
+stab-syms.lo: ../../../src/gcc-4.5.3/gdb/bfd/stab-syms.c bfd.h \
+ ../../../src/gcc-4.5.3/gdb/bfd/../include/ansidecl.h \
+ ../../../src/gcc-4.5.3/gdb/bfd/../include/symcat.h \
+ ../../../src/gcc-4.5.3/gdb/bfd/libaout.h \
+ ../../../src/gcc-4.5.3/gdb/bfd/../include/bfdlink.h \
+ ../../../src/gcc-4.5.3/gdb/bfd/../include/aout/aout64.h \
+ ../../../src/gcc-4.5.3/gdb/bfd/../include/aout/stab.def
+
+bfd.h:
+
+../../../src/gcc-4.5.3/gdb/bfd/../include/ansidecl.h:
+
+../../../src/gcc-4.5.3/gdb/bfd/../include/symcat.h:
+
+../../../src/gcc-4.5.3/gdb/bfd/libaout.h:
+
+../../../src/gcc-4.5.3/gdb/bfd/../include/bfdlink.h:
+
+../../../src/gcc-4.5.3/gdb/bfd/../include/aout/aout64.h:
+
+../../../src/gcc-4.5.3/gdb/bfd/../include/aout/stab.def:

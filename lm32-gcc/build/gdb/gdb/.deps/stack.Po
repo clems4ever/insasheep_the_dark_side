@@ -1,0 +1,166 @@
+stack.o: ../../../src/gcc-4.5.3/gdb/gdb/stack.c \
+ ../../../src/gcc-4.5.3/gdb/gdb/defs.h config.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/../include/ansidecl.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/gdb_locale.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/gdb_wchar.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/../include/gdb/signals.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/../include/libiberty.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/../include/ansidecl.h ../bfd/bfd.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/../include/symcat.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/ui-file.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/../include/fopen-bin.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/gdbarch.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/value.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/doublest.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/../include/floatformat.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/frame.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/symtab.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/gdbtypes.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/../include/hashtab.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/expression.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/ada-operator.inc \
+ ../../../src/gcc-4.5.3/gdb/gdb/language.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/gdbcmd.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/command.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/ui-out.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/gdbcore.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/exec.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/target.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/memattr.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/vec.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/gdb_string.h gnulib/string.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/gdb_assert.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/common/gdb_signals.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/progspace.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/source.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/breakpoint.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/../include/demangle.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/../include/libiberty.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/inferior.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/annotate.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/block.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/stack.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/dictionary.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/exceptions.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/reggroups.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/regcache.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/solib.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/valprint.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/gdbthread.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/cp-support.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/disasm.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/inline-frame.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/psymtab.h \
+ ../../../src/gcc-4.5.3/gdb/gdb/symfile.h
+
+../../../src/gcc-4.5.3/gdb/gdb/defs.h:
+
+config.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/../include/ansidecl.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/gdb_locale.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/gdb_wchar.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/../include/gdb/signals.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/../include/libiberty.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/../include/ansidecl.h:
+
+../bfd/bfd.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/../include/symcat.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/ui-file.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/../include/fopen-bin.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/gdbarch.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/value.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/doublest.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/../include/floatformat.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/frame.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/symtab.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/gdbtypes.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/../include/hashtab.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/expression.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/ada-operator.inc:
+
+../../../src/gcc-4.5.3/gdb/gdb/language.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/gdbcmd.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/command.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/ui-out.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/gdbcore.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/exec.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/target.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/memattr.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/vec.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/gdb_string.h:
+
+gnulib/string.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/gdb_assert.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/common/gdb_signals.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/progspace.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/source.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/breakpoint.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/../include/demangle.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/../include/libiberty.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/inferior.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/annotate.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/block.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/stack.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/dictionary.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/exceptions.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/reggroups.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/regcache.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/solib.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/valprint.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/gdbthread.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/cp-support.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/disasm.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/inline-frame.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/psymtab.h:
+
+../../../src/gcc-4.5.3/gdb/gdb/symfile.h:

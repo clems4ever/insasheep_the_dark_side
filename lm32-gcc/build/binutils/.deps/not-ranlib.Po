@@ -1,0 +1,1 @@
+not-ranlib.o: ../../src/gcc-4.5.3/binutils/not-ranlib.c

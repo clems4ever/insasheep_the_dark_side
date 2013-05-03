@@ -1,0 +1,18 @@
+VPATH = ../../../../../src/gcc-4.5.3/gdb/gdb/testsuite/gdb.cp
+srcdir = ../../../../../src/gcc-4.5.3/gdb/gdb/testsuite/gdb.cp
+
+EXECUTABLES = ambiguous annota2 anon-union cplusfuncs cttiadd \
+	derivation inherit local member-ptr method misc \
+        overload ovldbreak ref-typ ref-typ2 templates userdef virtfunc namespace \
+	ref-types ref-params method2 pr9594 gdb2495 virtfunc2 pr9067 \
+	pr1072 pr10687 pr9167
+
+all info install-info dvi install uninstall installcheck check:
+	@echo "Nothing to be done for $@..."
+
+clean mostlyclean:
+	-rm -f *~ *.o *.ci
+	-rm -f core ${EXECUTABLES}
+
+distclean maintainer-clean realclean: clean
+	-rm -f Makefile config.status config.log
