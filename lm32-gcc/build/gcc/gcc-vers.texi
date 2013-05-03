@@ -1,5 +1,0 @@
-@set version-GCC 4.5.3
-@clear DEVELOPMENT
-@set srcdir /home/matt/Documents/Studies/4IRT/insasheep_the_dark_side/lm32-gcc/build/gcc/../../src/gcc-4.5.3/gcc
-@set VERSION_PACKAGE (GCC) 
-@set BUGURL @uref{http://gcc.gnu.org/bugs.html}

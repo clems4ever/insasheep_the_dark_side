@@ -1,1 +1,0 @@
-not-strip.o: ../../src/gcc-4.5.3/binutils/not-strip.c

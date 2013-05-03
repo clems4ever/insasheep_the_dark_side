@@ -4,9 +4,12 @@
 *.lst
 *.srec
 *.ram
+*.tar.bz2
 firmware/boot0-serial/image
 firmware/boot-ram-test/image
 firmware/ddr-phaser/image
 firmware/gdb-test/image
 firmware/hw-test/image
 tools/srec2vram/srec2vram
+lm32-gcc/build
+

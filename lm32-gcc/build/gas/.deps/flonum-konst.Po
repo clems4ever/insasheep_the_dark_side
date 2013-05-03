@@ -1,9 +1,0 @@
-flonum-konst.o: ../../src/gcc-4.5.3/gas/flonum-konst.c \
- ../../src/gcc-4.5.3/gas/../include/ansidecl.h \
- ../../src/gcc-4.5.3/gas/flonum.h ../../src/gcc-4.5.3/gas/bignum.h
-
-../../src/gcc-4.5.3/gas/../include/ansidecl.h:
-
-../../src/gcc-4.5.3/gas/flonum.h:
-
-../../src/gcc-4.5.3/gas/bignum.h:
