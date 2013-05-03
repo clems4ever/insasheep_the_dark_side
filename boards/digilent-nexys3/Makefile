@@ -40,7 +40,34 @@ SRC=                                      \
 	../../rtl/wb_conbus/wb_conbus_arb.v   \
 	../../rtl/wb_norflash/norflash16.v   \
 	../../rtl/wb_master_arbitrer/wb_master_arbitrer.v \
+	../../rtl/ethmac/trunk/rtl/verilog/eth_clockgen.v \
+	../../rtl/ethmac/trunk/rtl/verilog/eth_cop.v \
+	../../rtl/ethmac/trunk/rtl/verilog/eth_crc.v \
+	../../rtl/ethmac/trunk/rtl/verilog/eth_fifo.v \
+	../../rtl/ethmac/trunk/rtl/verilog/eth_maccontrol.v \
+	../../rtl/ethmac/trunk/rtl/verilog/ethmac_defines.v \
+	../../rtl/ethmac/trunk/rtl/verilog/eth_macstatus.v \
 	../../rtl/ethmac/trunk/rtl/verilog/ethmac.v \
+	../../rtl/ethmac/trunk/rtl/verilog/eth_miim.v \
+	../../rtl/ethmac/trunk/rtl/verilog/eth_outputcontrol.v \
+	../../rtl/ethmac/trunk/rtl/verilog/eth_random.v \
+	../../rtl/ethmac/trunk/rtl/verilog/eth_receivecontrol.v \
+	../../rtl/ethmac/trunk/rtl/verilog/eth_registers.v \
+	../../rtl/ethmac/trunk/rtl/verilog/eth_register.v \
+	../../rtl/ethmac/trunk/rtl/verilog/eth_rxaddrcheck.v \
+	../../rtl/ethmac/trunk/rtl/verilog/eth_rxcounters.v \
+	../../rtl/ethmac/trunk/rtl/verilog/eth_rxethmac.v \
+	../../rtl/ethmac/trunk/rtl/verilog/eth_rxstatem.v \
+	../../rtl/ethmac/trunk/rtl/verilog/eth_shiftreg.v \
+	../../rtl/ethmac/trunk/rtl/verilog/eth_spram_256x32.v \
+	../../rtl/ethmac/trunk/rtl/verilog/eth_top.v \
+	../../rtl/ethmac/trunk/rtl/verilog/eth_transmitcontrol.v \
+	../../rtl/ethmac/trunk/rtl/verilog/eth_txcounters.v \
+	../../rtl/ethmac/trunk/rtl/verilog/eth_txethmac.v \
+	../../rtl/ethmac/trunk/rtl/verilog/eth_txstatem.v \
+	../../rtl/ethmac/trunk/rtl/verilog/eth_wishbone.v \
+	../../rtl/ethmac/trunk/rtl/verilog/timescale.v \
+	../../rtl/ethmac/trunk/rtl/verilog/xilinx_dist_ram_16x32.v \
 	../../rtl/wb_graphic_card/graphic_card.v \
 	../../rtl/wb_graphic_card/display_monitor.v \
 	../../rtl/wb_graphic_card/vga_controller.v  

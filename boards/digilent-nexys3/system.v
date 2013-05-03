@@ -174,7 +174,7 @@ wire         lm32i_ack,
              bram0_ack,
              sram0_ack,
 	     gc_ack,
-	     norflash0_ack
+	     norflash0_ack,
 	     eth0_ack;
 
 wire         lm32i_rty,
