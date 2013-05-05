@@ -8,7 +8,6 @@ mkdir $TOPDIR/tarballs
 cd $TOPDIR/tarballs
 
 #curl ftp://ftp.irisa.fr/pub/mirrors/gcc.gnu.org/gcc/releases/gcc-4.5.3/gcc-4.5.3.tar.bz2 -o gcc-4.5.3.tar.bz2
-#curl http://fileboar.com/gcc/releases/gcc-4.5.3/gcc-4.5.3.tar.bz2 -o gcc-4.5.3.tar.bz2
 #curl http://ftp.gnu.org/gnu/gdb/gdb-7.2a.tar.bz2 -o gdb-7.2a.tar.bz2
 #curl http://ftp.gnu.org/gnu/binutils/binutils-2.21.1.tar.bz2 -o binutils-2.21.1.tar.bz2
 #curl http://www.multiprecision.org/mpc/download/mpc-0.9.tar.gz -o mpc-0.9.tar.gz
