@@ -1,5 +1,7 @@
 *.d
 *.o
+*.s
+*.asm
 *.map
 *.lst
 *.srec
