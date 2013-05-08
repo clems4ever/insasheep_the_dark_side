@@ -69,13 +69,6 @@ int main(int argc, char **argv)
 				destination++;
 		}
 
-		// dump BIOS (debug)
-		/*destination = (char *) start_address;
-		for(i=0; i<bios_size; i++){
-				putHChar(*destination);
-				destination++;
-		}*/
-
 		uart_putstr("\r\nJumping to bootloader...\r\n\n");
 		// Jumps to the bootloader
 		jump(start_address);

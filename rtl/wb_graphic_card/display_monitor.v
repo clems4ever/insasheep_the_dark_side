@@ -173,9 +173,7 @@ module display_monitor(
 						buffer[buffer_write_ptr+7] <= gc_dat_i[30:28];
 
 						ack <= 1'b1;
-					end else
-						if(gc_stb_o == 0)
-							gc_stb_o <= 1'b1;
+					end
 				end				
 			end
 		end

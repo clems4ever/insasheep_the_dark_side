@@ -6,19 +6,13 @@
 
 module system
 #(
-//	parameter   bootram_file     = "../../firmware/ddr-phaser/image.ram",
-//	parameter   bootram_file     = "../../firmware/boot0-serial/image.ram",
-//	parameter   bootram_file     = "../../firmware/boot-ram-test/image.ram",
-	//parameter   bootram_file     = "../../firmware/boot-dump-memory/image.ram",
-
 	// ADDED clems_maul
 	// Voici notre firmware 
 	parameter   bootram_file     = "../../firmware/insa_firmware/image.ram",
-	//parameter   bootram_file     = "../../firmware/boot0-serial/image.ram",
 	// END ADDED
 	
 	parameter   clk_freq         = 100000000,
-	parameter   uart_baud_rate   = 115200
+	parameter   uart_baud_rate   = 115200 
 ) (
 	input 		  clk,
 	// Debug
@@ -94,9 +88,9 @@ wire [31:0]  lm32i_adr,
              gpio0_adr,
              bram0_adr,
              sram0_adr,
-	     gc_adr,
-	     norflash0_adr,
-	     eth0_adr;
+	     	 gc_adr,
+	     	 norflash0_adr,
+	      	 eth0_adr;
 
 wire [31:0]  lm32i_dat_r,
              lm32i_dat_w,
@@ -112,12 +106,12 @@ wire [31:0]  lm32i_dat_r,
              bram0_dat_w,
              sram0_dat_r,
              sram0_dat_w,
-	     gc_dat_r,
-	     gc_dat_w,
-	     norflash0_dat_r,
-	     norflash0_dat_w,
-	     eth0_dat_r,
-	     eth0_dat_w;
+	    	 gc_dat_r,
+	    	 gc_dat_w,
+	     	 norflash0_dat_r,
+	      	 norflash0_dat_w,
+	      	 eth0_dat_r,
+	     	 eth0_dat_w;
 
 wire [3:0]   lm32i_sel,
              lm32d_sel,
@@ -126,9 +120,9 @@ wire [3:0]   lm32i_sel,
              gpio0_sel,
              bram0_sel,
              sram0_sel,
-	     gc_sel,
-	     norflash0_sel,
-	     eth0_sel;
+		     gc_sel,
+	    	 norflash0_sel,
+	     	 eth0_sel;
 			 
 wire         lm32i_we,
              lm32d_we,
@@ -137,9 +131,9 @@ wire         lm32i_we,
              gpio0_we,
              bram0_we,
              sram0_we,
-	     gc_we,
-	     norflash0_we,
-	     eth0_we;
+	     	 gc_we,
+	     	 norflash0_we,
+	     	 eth0_we;
 
 wire         lm32i_cyc,
              lm32d_cyc,
@@ -148,12 +142,12 @@ wire         lm32i_cyc,
              gpio0_cyc,
              bram0_cyc,
              sram0_cyc,
-	     gc_cyc,
-	     norflash0_cyc,
-	     lm32i_cyc_o,
-	     lm32d_cyc_o,
-	     gc_cyc_o,
-	     eth0_cyc;
+	     	 gc_cyc,
+	     	 norflash0_cyc,
+	     	 lm32i_cyc_o,
+	     	 lm32d_cyc_o,
+	     	 gc_cyc_o,
+	     	 eth0_cyc;
 
 wire         lm32i_stb,
              lm32d_stb,
@@ -162,9 +156,9 @@ wire         lm32i_stb,
              gpio0_stb,
              bram0_stb,
              sram0_stb,
-	     gc_stb,
-	     norflash0_stb,
-	     eth0_stb;
+	     	 gc_stb,
+	     	 norflash0_stb,
+	     	 eth0_stb;
 
 wire         lm32i_ack,
              lm32d_ack,
@@ -173,9 +167,9 @@ wire         lm32i_ack,
              gpio0_ack,
              bram0_ack,
              sram0_ack,
-	     gc_ack,
-	     norflash0_ack,
-	     eth0_ack;
+	     	 gc_ack,
+	     	 norflash0_ack,
+	     	 eth0_ack;
 
 wire         lm32i_rty,
              lm32d_rty;
@@ -196,7 +190,7 @@ wire [1:0]   lm32i_bte,
 // Interrupts
 //---------------------------------------------------------------------------
 wire  [31:0] intr_n;
-wire         uart0_intr = 0;
+wire         uart0_intr;
 wire         gpio0_intr;
 wire   [1:0] timer0_intr;
 
@@ -215,8 +209,8 @@ wb_conbus_top #(
 	.s3_addr   ( 15'h7000 ),    // uart0
 	.s4_addr   ( 15'h7001 ),    // timer0
 	.s5_addr   ( 15'h7002 ),    // gpio0
-	.s6_addr   ( 15'h7003 ),
-	.s7_addr   ( 15'h7004 )
+	.s6_addr   ( 15'h7003 ),    // Graphic card slave
+	.s7_addr   ( 15'h7004 )     // Ethernet slave
 ) conmax0 (
 	.clk_i( clk ),
 	.rst_i( rst ),
@@ -588,8 +582,8 @@ wb_master_arbitrer arbitrer0 (
 
 	.m0_cyc_i(lm32i_cyc),
 	.m1_cyc_i(lm32d_cyc),
-	//.m2_cyc_i(gc_cyc),
-	.m2_cyc_i(gnd),
+	.m2_cyc_i(gc_cyc),
+	//.m2_cyc_i(gnd),
 	.m3_cyc_i(gnd),
 
 	.m0_cyc_o(lm32i_cyc_o),
@@ -703,7 +697,7 @@ wb_uart #(
 	.wb_we_i(     uart0_we      ),
 	.wb_sel_i(    uart0_sel     ),
 	.wb_ack_o(    uart0_ack     ),
-//	.intr(       uart0_intr     ),
+	.intr(       uart0_intr     ),
 	.uart_rxd(    uart0_rxd     ),
 	.uart_txd(    uart0_txd     )
 );
@@ -811,7 +805,7 @@ assign uart0_rxd = (sw[0]) ? uart_rxd  : 1;
 //----------------------------------------------------------------------------
 // Mux LEDs and Push Buttons according to sw[1]
 //----------------------------------------------------------------------------
-wire [7:0] debug_leds = { clk, rst, gc_stb, gc_ack, lm32i_stb, lm32i_ack, lm32d_stb, lm32d_ack };
+wire [7:0] debug_leds = { uart0_intr, rst, gc_stb, gc_ack, lm32i_stb, lm32i_ack, lm32d_stb, lm32d_ack };
 //wire [7:0] debug_leds = { 4'b0000, norflash0_sel};
 //{ clk, rst, sram0_cyc, ~uart_txd, lm32i_stb, lm32i_ack, lm32d_stb, lm32d_ack };
 wire [7:0] gpio_leds  = gpio0_out[7:0];

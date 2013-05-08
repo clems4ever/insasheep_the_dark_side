@@ -23,6 +23,7 @@ module wb_uart #(
 	input        [3:0] wb_sel_i,
 	input       [31:0] wb_dat_i,
 	output reg  [31:0] wb_dat_o,
+	output 				intr,
 	// Serial Wires
 	input              uart_rxd,
 	output             uart_txd
@@ -71,6 +72,7 @@ reg  ack;
 assign wb_ack_o       = wb_stb_i & wb_cyc_i & ack;
 
 assign tx_data = wb_dat_i[7:0];
+assign intr = rx_avail;
 
 always @(posedge clk)
 begin
