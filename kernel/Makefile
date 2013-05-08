@@ -51,5 +51,5 @@ kernel.bin: kernel
 	$(LM32_CPP) -S $< 
 
 clean:
-	rm -f kernel kernel.bin kernel.lst kernel.map *.o *.d *.s
+	rm -f kernel kernel.bin kernel.lst kernel.map *.o *.d *.asm *.s
 
