@@ -1,7 +1,0 @@
-
-
-
-This is the home made kernel.
-
-Interruptions are enabled, then we can use timers and uart interruptions.
-
