@@ -19,7 +19,7 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 module graphic_card #(
-	parameter map_base_address = 32'h40800000
+	parameter map_base_address = 32'h40100000
 	) (
 	input rst,
 	input clk_100MHz,
@@ -35,13 +35,13 @@ module graphic_card #(
 	input gc_ack_i,
 	
 	// Wishbone slave
-	output reg [31:0] gc_s_dat_o,
+	input [31:0] gc_s_dat_i,
 	input  [31:0] gc_s_adr_i,
 	input gc_s_cyc_i,
 	input [3:0] gc_s_sel_i,
 	input gc_s_stb_i,
 	input gc_s_we_i,
-	input [31:0] gc_s_dat_i,
+	output reg [31:0] gc_s_dat_o,
 	output reg gc_s_ack_o,
 	
 	// VGA
@@ -128,7 +128,7 @@ module graphic_card #(
 	always @(posedge rst or posedge clk_100MHz)
 	begin	
 		if(rst) begin
-			status_register <= 1;
+			status_register <= 0;
 			map_address <= map_base_address;
 		end else begin
 			if(wb_s_rd) begin // If read
