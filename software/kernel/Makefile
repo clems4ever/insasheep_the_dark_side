@@ -10,7 +10,7 @@ LDFLAGS=-nostdlib -nodefaultlibs -Tlinker.ld
 SEGMENTS = -j .text -j .rodata -j .data 
 
 OBJECTS=	crt0.o \
-			test.o \
+			gcc.o \
 			main.o \
 			kernel.o \
 			event_queue.o \
@@ -18,13 +18,13 @@ OBJECTS=	crt0.o \
 			uart_event.o \
 			heap.o \
 			uart.o \
-			string.o \
-			terminal.o \
 			flash.o \
 			tools.o \
 			interruptions.o \
 			exceptions.o \
-			timer.o
+			timer.o \
+			scheduler.o \
+			task.o 
 
 
 all: kernel.bin 

@@ -9,7 +9,7 @@ timer_t *Timer::m_timer0 = (timer_t *)  0xF0010000;
 
 void Timer::installTimer0()
 {
-	#ifdef DEBUG
+	#if defined(DEBUG) && defined(TIMER_DEBUG)
 	Uart::printfln("Tic initialized");
 	#endif 
 	// Setup timer0.0
@@ -19,7 +19,7 @@ void Timer::installTimer0()
 }
 
 void Timer::rearmTimer0(){
-	#ifdef DEBUG
+	#if defined(DEBUG) && defined(TIMER_DEBUG)
 	Uart::printf("rearm");
 	#endif
 	m_timer0->counter0 = 0;

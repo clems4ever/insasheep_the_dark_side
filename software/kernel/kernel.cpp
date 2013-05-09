@@ -11,6 +11,7 @@
 // Intanciation of the heap
 Heap Kernel::m_heap(HEAP_START_ADDRESS, HEAP_SIZE);
 EventQueue Kernel::m_event_queue;
+Scheduler Kernel::m_scheduler;
 
 
 void Kernel::initialize()

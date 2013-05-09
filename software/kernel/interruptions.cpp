@@ -24,5 +24,5 @@ extern "C" void irq0(void)
 extern "C" void irq1(void)
 {
 	Timer::rearmTimer0();
-	Uart::println("coucou");
+	Task *t = Kernel::m_scheduler.schedule();
 }
