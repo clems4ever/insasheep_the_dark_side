@@ -19,5 +19,6 @@
 						addi sp, sp, 4; ")
 
 extern "C" void irq0(void);
+extern "C" void irq1(void);
 
 #endif 

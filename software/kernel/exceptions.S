@@ -2,7 +2,6 @@
 
 
 .global irq_enable, irq_disable, irq_mask, interruption_handler 
-//.global _irq0, _irq1
 .global raise, handle_interruptions, handle_scall
 
 
@@ -27,17 +26,37 @@ irq_disable:
 
 
 handle_interruptions:
-	addi sp, sp, -8
+	addi sp, sp, -16
 	sw (sp+4), ra
 	sw (sp+8), r1
-	
+	sw (sp+12), r2
+	sw (sp+16), r3
+
+	// Read interruptions pending register
+	rcsr r1, IP
+
+	// Test IRQ0
+	mvi r3, 0x1
+	and r2, r1, r3  
+	bne r2, r3, test_irq1
 	calli irq0
-	mvi r1, 0x1
+
+	// Test IRQ1
+	test_irq1:
+	mvi r3, 0x2
+	and r2, r1, r3 
+	bne r2, r3, end_irq
+	calli irq1
+
+	end_irq:
+	mvi r1, 0x3
 	wcsr IP, r1
 	
 	lw ra, (sp+4)
 	lw r1, (sp+8)
-	addi sp, sp, 8
+	lw r2, (sp+12)
+	lw r3, (sp+16)
+	addi sp, sp, 16
 	ret
 
 
@@ -50,17 +69,3 @@ handle_scall:
 raise:
 
 
-// UART
-_irq0:
-	addi sp, sp, -4
-	sw (sp+4), ra
-	calli irq0
-	lw ra, (sp+4)
-	addi sp, sp, 4
-	ret
-
-
-
-_irq1:
-
-	ret

@@ -152,7 +152,7 @@ _crt0:
 		wcsr IP, r1
 		wcsr IE, r1
 		// Mask all but the 4 first irq
-		mvi r1, 0x00000001
+		mvi r1, 0x0000000f
 		wcsr IM, r1
 		
 		mvi r1, 0

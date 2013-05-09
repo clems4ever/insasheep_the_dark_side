@@ -23,7 +23,8 @@ OBJECTS=	crt0.o \
 			flash.o \
 			tools.o \
 			interruptions.o \
-			exceptions.o 
+			exceptions.o \
+			timer.o
 
 
 all: kernel.bin 

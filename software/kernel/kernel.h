@@ -16,7 +16,7 @@ class Kernel
 {
 public:
 	static void loop();
-	static void init();
+	static void initialize();
 
 	static void pushEvent(Event *e);
 
