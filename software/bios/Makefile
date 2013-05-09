@@ -2,8 +2,8 @@ LM32_CC=lm32-elf-gcc
 LM32_LD=lm32-elf-ld
 LM32_OBJCOPY=lm32-elf-objcopy
 LM32_OBJDUMP=lm32-elf-objdump
-LIBDIR=../../include
-INC=-I$(LIBDIR)/d_stdio -I$(LIBDIR)/uart -I$(LIBDIR)/string
+LIBDIR=../include
+INC=-I$(LIBDIR)/d_stdio -I$(LIBDIR)/uart -I$(LIBDIR)/string -I$(LIBDIR)/irq
 LIBS=-L$(LIBDIR)/string -L$(LIBDIR)/d_stdio -L$(LIBDIR)/uart --start-group -luart -ld_stdio -lstring --end-group
 
 CFLAGS=-MMD -O0 -Wall -g -s -fomit-frame-pointer -mbarrel-shift-enabled   -mmultiply-enabled -mdivide-enabled -msign-extend-enabled -fno-builtin

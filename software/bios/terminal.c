@@ -1,5 +1,6 @@
 #include <string.h>
 #include <uart.h>
+//#include <irq.h>
 #include <d_stdio.h>
 #include "terminal.h"
 
@@ -7,6 +8,7 @@
 #define RAMTEST_SIZE 10
 #define FLASHTEST_SIZE 10
 #define KERNEL_BASE (void*)0x40000000
+#define TEST_ADDR (void*)0x40010000
 
 extern void halt();
 extern void unlock_block(short *block);
@@ -24,6 +26,12 @@ void reboot(){
 
 void jump_to_kernel(){
 	uart_println("Jump to kernel");
+	
+	/*printfln("Mask: %d", irq_getmask());
+	irq_setmask(0);
+	irq_enable(0);*/
+	
+	printfln("Jump now!");
 	jump(KERNEL_BASE);
 	while(1);
 }
@@ -95,6 +103,14 @@ void getCommand(char *cmd, int buffer_size){
 }
 
 
+void test(){
+	uart_println("Jump to test");
+	
+	printfln("Jump now!");
+	jump(TEST_ADDR);
+	while(1);
+}
+
 void parseCommand(const char *cmd){
 
 	if(strcmp(cmd, "reboot") == 0){
@@ -113,6 +129,9 @@ void parseCommand(const char *cmd){
 	}
 	else if(strcmp(cmd, "halt") == 0){
 		halt();
+	}
+	else if(strcmp(cmd, "test") == 0){
+		test();
 	}
 	else{
 		printfln("Unknown command... %s", cmd);
