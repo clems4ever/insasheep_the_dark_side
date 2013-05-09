@@ -1,0 +1,11 @@
+
+
+******************************************* INSA BOOTLOADER ***************************************************
+
+Here is the source code of our simple bootloader.
+it reads the BIOS size in bytes at 0x50000000 (int 4 bytes).
+And we copy this number of bytes from 0x50000000+4 to the end of the bios at the address 0x40000000
+
+Finally, it jumps to 0x40000000.
+
+
