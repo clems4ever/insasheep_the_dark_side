@@ -37,16 +37,25 @@ module wb_master_arbitrer(
 
 	reg [1:0] selector = 0;
 	wire bus_granted;
+	reg wait_state;
 	
 	always @(posedge clk)
 	begin
 		if(rst) begin
 			selector <= 1'b0;
+			wait_state <= 1'b0;
 		end else begin
-		if(~bus_granted) begin
+		if(~bus_granted & ~wait_state) begin
 			selector <= selector + 1;
+		end else
+		if(~bus_granted & wait_state)
+			wait_state <= 1'b0;
 		end
-		end
+
+
+		if(bus_granted)
+			wait_state <= 1'b1;
+
 	end
 	
 	assign bus_granted = (selector == 0 && m0_cyc_i == 1)
@@ -54,10 +63,10 @@ module wb_master_arbitrer(
 			|| (selector == 2 && m2_cyc_i == 1)
 			|| (selector == 3 && m3_cyc_i == 1);
 	
-	assign m0_cyc_o = (selector == 0) ? m0_cyc_i : 1'b0;
-	assign m1_cyc_o = (selector == 1) ? m1_cyc_i : 1'b0;
-	assign m2_cyc_o = (selector == 2) ? m2_cyc_i : 1'b0;
-	assign m3_cyc_o = (selector == 3) ? m3_cyc_i : 1'b0;
+	assign m0_cyc_o = (selector == 0 & wait_state) ? m0_cyc_i : 1'b0;
+	assign m1_cyc_o = (selector == 1 & wait_state) ? m1_cyc_i : 1'b0;
+	assign m2_cyc_o = (selector == 2 & wait_state) ? m2_cyc_i : 1'b0;
+	assign m3_cyc_o = (selector == 3 & wait_state) ? m3_cyc_i : 1'b0;
 	
 
 endmodule

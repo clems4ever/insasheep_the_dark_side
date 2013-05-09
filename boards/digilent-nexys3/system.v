@@ -8,7 +8,7 @@ module system
 #(
 	// ADDED clems_maul
 	// Voici notre firmware 
-	parameter   bootram_file     = "../../firmware/insa_firmware/image.ram",
+	parameter   bootram_file     = "../../software/firmware/insa_firmware/image.ram",
 	// END ADDED
 	
 	parameter   clk_freq         = 100000000,
@@ -81,16 +81,20 @@ wire         gnd   =  1'b0;
 wire   [3:0] gnd4  =  4'h0;
 wire  [31:0] gnd32 = 32'h00000000;
 
-wire [31:0]  lm32i_adr,
-             lm32d_adr,
+wire [31:0]  lm32i_adr_mmu_i, // From lm32 to mmu
+             lm32i_adr_mmu_o, // From mmu to syscon
+             lm32d_adr_mmu_i, // From lm32 to mmu
+             lm32d_adr_mmu_o, // From mmu to syscon
              uart0_adr,
              timer0_adr,
              gpio0_adr,
              bram0_adr,
              sram0_adr,
 	     	 gc_adr,
+	     	 gc_s_adr,
 	     	 norflash0_adr,
-	      	 eth0_adr;
+	      	 eth0_adr,
+			 mmu0_adr;
 
 wire [31:0]  lm32i_dat_r,
              lm32i_dat_w,
@@ -108,8 +112,12 @@ wire [31:0]  lm32i_dat_r,
              sram0_dat_w,
 	    	 gc_dat_r,
 	    	 gc_dat_w,
+	    	 gc_s_dat_r,
+	    	 gc_s_dat_w,
 	     	 norflash0_dat_r,
 	      	 norflash0_dat_w,
+	     	 mmu0_dat_r,
+	      	 mmu0_dat_w,
 	      	 eth0_dat_r,
 	     	 eth0_dat_w;
 
@@ -121,8 +129,10 @@ wire [3:0]   lm32i_sel,
              bram0_sel,
              sram0_sel,
 		     gc_sel,
+		     gc_s_sel,
 	    	 norflash0_sel,
-	     	 eth0_sel;
+	     	 eth0_sel,
+			 mmu0_sel;
 			 
 wire         lm32i_we,
              lm32d_we,
@@ -132,8 +142,10 @@ wire         lm32i_we,
              bram0_we,
              sram0_we,
 	     	 gc_we,
+	     	 gc_s_we,
 	     	 norflash0_we,
-	     	 eth0_we;
+	     	 eth0_we,
+			 mmu0_we;
 
 wire         lm32i_cyc,
              lm32d_cyc,
@@ -143,11 +155,13 @@ wire         lm32i_cyc,
              bram0_cyc,
              sram0_cyc,
 	     	 gc_cyc,
+	     	 gc_s_cyc,
 	     	 norflash0_cyc,
-	     	 lm32i_cyc_o,
-	     	 lm32d_cyc_o,
-	     	 gc_cyc_o,
-	     	 eth0_cyc;
+	     	 //lm32i_cyc_o,
+	     	 //lm32d_cyc_o,
+	     	 //gc_cyc_o,
+	     	 eth0_cyc,
+			 mmu0_cyc;
 
 wire         lm32i_stb,
              lm32d_stb,
@@ -157,8 +171,10 @@ wire         lm32i_stb,
              bram0_stb,
              sram0_stb,
 	     	 gc_stb,
+	     	 gc_s_stb,
 	     	 norflash0_stb,
-	     	 eth0_stb;
+	     	 eth0_stb,
+			 mmu0_stb;
 
 wire         lm32i_ack,
              lm32d_ack,
@@ -168,8 +184,10 @@ wire         lm32i_ack,
              bram0_ack,
              sram0_ack,
 	     	 gc_ack,
+	     	 gc_s_ack,
 	     	 norflash0_ack,
-	     	 eth0_ack;
+	     	 eth0_ack,
+			 mmu0_ack;
 
 wire         lm32i_rty,
              lm32d_rty;
@@ -210,17 +228,18 @@ wb_conbus_top #(
 	.s4_addr   ( 15'h7001 ),    // timer0
 	.s5_addr   ( 15'h7002 ),    // gpio0
 	.s6_addr   ( 15'h7003 ),    // Graphic card slave
-	.s7_addr   ( 15'h7004 )     // Ethernet slave
+	.s7_addr   ( 15'h7004 ),     // Ethernet slave
+	.s8_addr   ( 15'h7005 )     // MMU slave
 ) conmax0 (
 	.clk_i( clk ),
 	.rst_i( rst ),
 	// Master0
 	.m0_dat_i(  lm32i_dat_w  ),
 	.m0_dat_o(  lm32i_dat_r  ),
-	.m0_adr_i(  lm32i_adr    ),
+	.m0_adr_i(  lm32i_adr_mmu_i    ),
 	.m0_we_i (  lm32i_we     ),
 	.m0_sel_i(  lm32i_sel    ),
-	.m0_cyc_i(  lm32i_cyc_o    ),
+	.m0_cyc_i(  lm32i_cyc    ),
 	.m0_stb_i(  lm32i_stb    ),
 	.m0_ack_o(  lm32i_ack    ),
 	.m0_rty_o(  lm32i_rty    ),
@@ -228,10 +247,10 @@ wb_conbus_top #(
 	// Master1
 	.m1_dat_i(  lm32d_dat_w  ),
 	.m1_dat_o(  lm32d_dat_r  ),
-	.m1_adr_i(  lm32d_adr    ),
+	.m1_adr_i(  lm32d_adr_mmu_i    ),
 	.m1_we_i (  lm32d_we     ),
 	.m1_sel_i(  lm32d_sel    ),
-	.m1_cyc_i(  lm32d_cyc_o    ),
+	.m1_cyc_i(  lm32d_cyc    ),
 	.m1_stb_i(  lm32d_stb    ),
 	.m1_ack_o(  lm32d_ack    ),
 	.m1_rty_o(  lm32d_rty    ),
@@ -242,7 +261,7 @@ wb_conbus_top #(
 	.m2_adr_i(  gc_adr    ),
 	.m2_we_i (  gc_we     ),
 	.m2_sel_i(  gc_sel    ),
-	.m2_cyc_i(  gc_cyc_o    ),
+	.m2_cyc_i(  gc_cyc    ),
 	.m2_stb_i(  gc_stb    ),
 	.m2_ack_o(  gc_ack    ),
 	// Master3
@@ -343,8 +362,14 @@ wb_conbus_top #(
 	.s5_err_i(  gnd          ),
 	.s5_rty_i(  gnd          ),
 	// Slave6
-	.s6_dat_i(  gnd32  ),
-	.s6_ack_i(  gnd    ),
+	.s6_dat_i(  gc_s_dat_r  ),
+	.s6_dat_o(  gc_s_dat_w  ),
+	.s6_adr_o(  gc_s_adr    ),
+	.s6_sel_o(  gc_s_sel    ),
+	.s6_we_o(   gc_s_we     ),
+	.s6_cyc_o(  gc_s_cyc    ),
+	.s6_stb_o(  gc_s_stb    ),
+	.s6_ack_i(  gc_s_ack    ),
 	.s6_err_i(  gnd    ),
 	.s6_rty_i(  gnd    ),
 	// Slave7
@@ -357,7 +382,18 @@ wb_conbus_top #(
 	.s7_stb_o(  eth0_stb    ),
 	.s7_ack_i(  eth0_ack    ),
 	.s7_err_i(  gnd    ),
-	.s7_rty_i(  gnd    )
+	.s7_rty_i(  gnd    ),
+	// Slave8
+	.s8_dat_i(  mmu0_dat_r  ),
+	.s8_dat_o(  mmu0_dat_w  ),
+	.s8_adr_o(  mmu0_adr    ),
+	.s8_sel_o(  mmu0_sel    ),
+	.s8_we_o(   mmu0_we     ),
+	.s8_cyc_o(  mmu0_cyc    ),
+	.s8_stb_o(  mmu0_stb    ),
+	.s8_ack_i(  mmu0_ack    ),
+	.s8_err_i(  gnd    ),
+	.s8_rty_i(  gnd    )
 );
 
 //---------------------------------------------------------------------------
@@ -368,7 +404,7 @@ lm32_cpu lm0 (
 	.rst_i(  rst  ),
 	.interrupt_n(  intr_n  ),
 	//
-	.I_ADR_O(  lm32i_adr    ),
+	.I_ADR_O(  lm32i_adr_mmu_i    ),
 	.I_DAT_I(  lm32i_dat_r  ),
 	.I_DAT_O(  lm32i_dat_w  ),
 	.I_SEL_O(  lm32i_sel    ),
@@ -382,7 +418,7 @@ lm32_cpu lm0 (
 	.I_ERR_I(  lm32i_err    ),
 	.I_RTY_I(  lm32i_rty    ),
 	//
-	.D_ADR_O(  lm32d_adr    ),
+	.D_ADR_O(  lm32d_adr_mmu_i    ),
 	.D_DAT_I(  lm32d_dat_r  ),
 	.D_DAT_O(  lm32d_dat_w  ),
 	.D_SEL_O(  lm32d_sel    ),
@@ -395,6 +431,33 @@ lm32_cpu lm0 (
 	.D_BTE_O(  lm32d_bte    ),
 	.D_ERR_I(  lm32d_err    ),
 	.D_RTY_I(  lm32d_rty    )
+);
+
+
+//---------------------------------------------------------------------------
+//	MMU 
+//---------------------------------------------------------------------------
+
+
+wb_mmu #(
+	.addr_width(32)
+) mmu0 (
+	.clk(clk),
+	.rst(rst),
+	.addr0_in(lm32i_addr_mmu_i),
+	.addr0_out(lm32i_addr_mmu_o),
+	.addr1_in(lm32d_addr_mmu_i),
+	.addr1_out(lm32d_addr_mmu_o),
+
+	// Wishbone interface
+	.wb_stb_i(mmu0_stb),
+	.wb_cyc_i(mmu0_cyc),
+	.wb_ack_o(mmu0_ack),
+	.wb_we_i(mmu0_we),
+	.wb_adr_i(mmu0_adr),
+	.wb_sel_i(mmu0_sel),
+	.wb_dat_i(mmu0_dat_w),
+	.wb_dat_o(mmu0_dat_r)
 );
 
 //---------------------------------------------------------------------------
@@ -575,7 +638,7 @@ assign flash_d  = flash_d_t;
 //---------------------------------------------------------------------------
 // Graphic card (VGA)
 //---------------------------------------------------------------------------
-
+/*
 wb_master_arbitrer arbitrer0 (
 	.clk(clk),
 	.rst(rst),
@@ -590,7 +653,7 @@ wb_master_arbitrer arbitrer0 (
 	.m1_cyc_o(lm32d_cyc_o),
 	.m2_cyc_o(gc_cyc_o)
 );
-
+*/
 
 graphic_card gc0(
 	.clk_100MHz(clk),
@@ -604,6 +667,15 @@ graphic_card gc0(
 	.gc_we_o(gc_we),
 	.gc_dat_i(gc_dat_r),
 	.gc_ack_i(gc_ack),
+
+	.gc_s_dat_i(gc_s_dat_w),
+	.gc_s_adr_i(gc_s_adr),
+	.gc_s_cyc_i(gc_s_cyc),
+	.gc_s_sel_i(gc_s_sel),
+	.gc_s_stb_i(gc_s_stb),
+	.gc_s_we_i(gc_s_we),
+	.gc_s_dat_o(gc_s_dat_r),
+	.gc_s_ack_o(gc_s_ack),
 
 	.vga_hsync(vga_hsync),
 	.vga_vsync(vga_vsync),
@@ -805,7 +877,7 @@ assign uart0_rxd = (sw[0]) ? uart_rxd  : 1;
 //----------------------------------------------------------------------------
 // Mux LEDs and Push Buttons according to sw[1]
 //----------------------------------------------------------------------------
-wire [7:0] debug_leds = { uart0_intr, rst, gc_stb, gc_ack, lm32i_stb, lm32i_ack, lm32d_stb, lm32d_ack };
+wire [7:0] debug_leds = { timer0_intr, rst, gc_stb, gc_ack, lm32i_stb, lm32i_ack, lm32d_stb, lm32d_ack };
 //wire [7:0] debug_leds = { 4'b0000, norflash0_sel};
 //{ clk, rst, sram0_cyc, ~uart_txd, lm32i_stb, lm32i_ack, lm32d_stb, lm32d_ack };
 wire [7:0] gpio_leds  = gpio0_out[7:0];
