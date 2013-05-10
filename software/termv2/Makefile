@@ -2,7 +2,7 @@ LM32_CC=lm32-elf-gcc
 LM32_LD=lm32-elf-ld
 LM32_OBJCOPY=lm32-elf-objcopy
 LM32_OBJDUMP=lm32-elf-objdump
-LIBDIR=../../include
+LIBDIR=../include
 INC=-I$(LIBDIR)/d_stdio -I$(LIBDIR)/uart -I$(LIBDIR)/string
 LIBS=-L$(LIBDIR)/string -L$(LIBDIR)/d_stdio -L$(LIBDIR)/uart --start-group -luart -ld_stdio -lstring --end-group
 
