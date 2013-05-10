@@ -5,12 +5,19 @@
 #include "uart_event.h"
 #include "uart.h"
 #include "interruptions.h"
+#include "timer.h"
 
 
 // Intanciation of the heap
 Heap Kernel::m_heap(HEAP_START_ADDRESS, HEAP_SIZE);
 EventQueue Kernel::m_event_queue;
+Scheduler Kernel::m_scheduler;
 
+
+void Kernel::initialize()
+{
+	Timer::installTimer0();	
+}
 
 void Kernel::loop()
 {
@@ -53,8 +60,4 @@ void Kernel::loop()
 
 
 
-void Kernel::pushEvent(Event *e)
-{
-	Kernel::m_event_queue.push(e);
-}
 

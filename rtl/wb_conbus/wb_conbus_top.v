@@ -52,7 +52,7 @@
 `define			mbusw  `aw + `sw + `dw +4 	//address width + byte select width + dat width + cyc + we + stb +cab , input from master interface
 `define			sbusw	 3	//  ack + err + rty, input from slave interface
 `define			mselectw  8	// number of masters
-`define			sselectw  8	// number of slavers
+`define			sselectw  9	// number of slavers
 
 //`define 		WB_USE_TRISTATE
 
@@ -68,7 +68,8 @@ module wb_conbus_top #(
 	parameter		s4_addr = 8'h94,		// slave 4 address
 	parameter		s5_addr = 8'h95,		// slave 5 address
 	parameter		s6_addr = 8'h96,		// slave 6 address
-	parameter		s7_addr = 8'h97			// slave 7 address
+	parameter		s7_addr = 8'h97,		// slave 7 address
+	parameter		s8_addr = 8'h98			// slave 8 address
 ) (
 	clk_i, rst_i,
 
@@ -134,8 +135,11 @@ module wb_conbus_top #(
 
 	// Slave 7 Interface
 	s7_dat_i, s7_dat_o, s7_adr_o, s7_sel_o, s7_we_o, s7_cyc_o,
-	s7_stb_o, s7_ack_i, s7_err_i, s7_rty_i, s7_cab_o
+	s7_stb_o, s7_ack_i, s7_err_i, s7_rty_i, s7_cab_o,
 
+	// Slave 8 Interface
+	s8_dat_i, s8_dat_o, s8_adr_o, s8_sel_o, s8_we_o, s8_cyc_o,
+	s8_stb_o, s8_ack_i, s8_err_i, s8_rty_i, s8_cab_o
 	);
 
 ////////////////////////////////////////////////////////////////////
@@ -361,12 +365,27 @@ input			s7_err_i;
 input			s7_rty_i;
 
 
+// Slave 8 Interface
+input	[`dw-1:0]	s8_dat_i;
+output	[`dw-1:0]	s8_dat_o;
+output	[`aw-1:0]	s8_adr_o;
+output	[`sw-1:0]	s8_sel_o;
+output			s8_we_o;
+output			s8_cyc_o;
+output			s8_stb_o;
+output			s8_cab_o;
+input			s8_ack_i;
+input			s8_err_i;
+input			s8_rty_i;
+
 ////////////////////////////////////////////////////////////////////
 //
 // Local wires
 //
 
+// Which master has the bus (1 bit per master
 wire	[`mselectw -1:0]	i_gnt_arb;
+// State of the arbiter state machine
 wire	[2:0]	gnt;
 reg	[`sselectw -1:0]	i_ssel_dec;
 `ifdef	WB_USE_TRISTATE
@@ -423,51 +442,48 @@ assign	m7_dat_o = i_dat_s;
 assign  {m7_ack_o, m7_err_o, m7_rty_o} = i_bus_s & {3{i_gnt_arb[7]}};
 
 
-assign  i_bus_s = {s0_ack_i | s1_ack_i | s2_ack_i | s3_ack_i | s4_ack_i | s5_ack_i | s6_ack_i | s7_ack_i ,
-				   s0_err_i | s1_err_i | s2_err_i | s3_err_i | s4_err_i | s5_err_i | s6_err_i | s7_err_i ,
-				   s0_rty_i | s1_rty_i | s2_rty_i | s3_rty_i | s4_rty_i | s5_rty_i | s6_rty_i | s7_rty_i };
+assign  i_bus_s = {s0_ack_i | s1_ack_i | s2_ack_i | s3_ack_i | s4_ack_i | s5_ack_i | s6_ack_i | s7_ack_i | s8_ack_i ,
+				   s0_err_i | s1_err_i | s2_err_i | s3_err_i | s4_err_i | s5_err_i | s6_err_i | s7_err_i | s8_err_i,
+				   s0_rty_i | s1_rty_i | s2_rty_i | s3_rty_i | s4_rty_i | s5_rty_i | s6_rty_i | s7_rty_i | s8_rty_i};
 
 ////////////////////////////////
 //	Slave output interface
 //
 // slave0
 assign  {s0_adr_o, s0_sel_o, s0_dat_o, s0_we_o, s0_cab_o,s0_cyc_o} = i_bus_m[`mbusw -1:1];
-assign	s0_stb_o = i_bus_m[1] & i_bus_m[0] & i_ssel_dec[0];  // stb_o = cyc_i & stb_i & i_ssel_dec
+assign	s0_stb_o = i_bus_m[1] & i_bus_m[0] & i_ssel_dec[0];  
 
 // slave1
-
 assign  {s1_adr_o, s1_sel_o, s1_dat_o, s1_we_o, s1_cab_o, s1_cyc_o} = i_bus_m[`mbusw -1:1];
 assign	s1_stb_o = i_bus_m[1] & i_bus_m[0] & i_ssel_dec[1];
 
 // slave2
-
 assign  {s2_adr_o, s2_sel_o, s2_dat_o, s2_we_o, s2_cab_o, s2_cyc_o} = i_bus_m[`mbusw -1:1];
 assign	s2_stb_o = i_bus_m[1] & i_bus_m[0] & i_ssel_dec[2];
 
 // slave3
-
 assign  {s3_adr_o, s3_sel_o, s3_dat_o, s3_we_o, s3_cab_o, s3_cyc_o} = i_bus_m[`mbusw -1:1];
 assign	s3_stb_o = i_bus_m[1] & i_bus_m[0] & i_ssel_dec[3];
 
 // slave4
-
 assign  {s4_adr_o, s4_sel_o, s4_dat_o, s4_we_o, s4_cab_o, s4_cyc_o} = i_bus_m[`mbusw -1:1];
 assign	s4_stb_o = i_bus_m[1] & i_bus_m[0] & i_ssel_dec[4];
 
 // slave5
-
 assign  {s5_adr_o, s5_sel_o, s5_dat_o, s5_we_o, s5_cab_o, s5_cyc_o} = i_bus_m[`mbusw -1:1];
 assign	s5_stb_o = i_bus_m[1] & i_bus_m[0] & i_ssel_dec[5];
 
 // slave6
-
 assign  {s6_adr_o, s6_sel_o, s6_dat_o, s6_we_o, s6_cab_o, s6_cyc_o} = i_bus_m[`mbusw -1:1];
 assign	s6_stb_o = i_bus_m[1] & i_bus_m[0] & i_ssel_dec[6];
 
 // slave7
-
 assign  {s7_adr_o, s7_sel_o, s7_dat_o, s7_we_o, s7_cab_o, s7_cyc_o} = i_bus_m[`mbusw -1:1];
 assign	s7_stb_o = i_bus_m[1] & i_bus_m[0] & i_ssel_dec[7];
+
+// slave8
+assign  {s8_adr_o, s8_sel_o, s8_dat_o, s8_we_o, s8_cab_o, s8_cyc_o} = i_bus_m[`mbusw -1:1];
+assign	s8_stb_o = i_bus_m[1] & i_bus_m[0] & i_ssel_dec[8];
 
 ///////////////////////////////////////
 //	Master and Slave input interface
@@ -492,6 +508,7 @@ assign  i_dat_s = i_ssel_dec[4] ? s4_dat_i: 32'bz;
 assign  i_dat_s = i_ssel_dec[5] ? s5_dat_i: 32'bz;
 assign  i_dat_s = i_ssel_dec[6] ? s6_dat_i: 32'bz;
 assign  i_dat_s = i_ssel_dec[7] ? s7_dat_i: 32'bz;
+assign  i_dat_s = i_ssel_dec[8] ? s8_dat_i: 32'bz;
 
 `else
 
@@ -512,7 +529,7 @@ always @(gnt , m0_adr_i, m0_sel_i, m0_dat_i, m0_we_i, m0_cab_i, m0_cyc_i,m0_stb_
 			3'h5:	i_bus_m = {m5_adr_i, m5_sel_i, m5_dat_i, m5_we_i, m5_cab_i, m5_cyc_i,m5_stb_i};
 			3'h6:	i_bus_m = {m6_adr_i, m6_sel_i, m6_dat_i, m6_we_i, m6_cab_i, m6_cyc_i,m6_stb_i};
 			3'h7:	i_bus_m = {m7_adr_i, m7_sel_i, m7_dat_i, m7_we_i, m7_cab_i, m7_cyc_i,m7_stb_i};
-			default:i_bus_m =  72'b0;//{m0_adr_i, m0_sel_i, m0_dat_i, m0_we_i, m0_cab_i, m0_cyc_i,m0_stb_i};
+			default:i_bus_m =  72'b0;
 endcase			
 
 assign	i_dat_s = i_ssel_dec[0] ? s0_dat_i :
@@ -522,7 +539,8 @@ assign	i_dat_s = i_ssel_dec[0] ? s0_dat_i :
 				  i_ssel_dec[4] ? s4_dat_i :
 				  i_ssel_dec[5] ? s5_dat_i :
 				  i_ssel_dec[6] ? s6_dat_i :
-				  i_ssel_dec[7] ? s7_dat_i : {`dw{1'b0}}; 
+				  i_ssel_dec[7] ? s7_dat_i :
+				  i_ssel_dec[8] ? s8_dat_i : {`dw{1'b0}}; 
 `endif
 //
 // arbitor 
@@ -553,7 +571,7 @@ wb_conbus_arb	wb_conbus_arb(
 //////////////////////////////////
 // 		address decode logic
 //
-wire [7:0]	m0_ssel_dec, m1_ssel_dec, m2_ssel_dec, m3_ssel_dec, m4_ssel_dec, m5_ssel_dec, m6_ssel_dec, m7_ssel_dec;
+wire [8:0]	m0_ssel_dec, m1_ssel_dec, m2_ssel_dec, m3_ssel_dec, m4_ssel_dec, m5_ssel_dec, m6_ssel_dec, m7_ssel_dec;
 always @(gnt, m0_ssel_dec, m1_ssel_dec, m2_ssel_dec, m3_ssel_dec, m4_ssel_dec, m5_ssel_dec, m6_ssel_dec, m7_ssel_dec)
 	case(gnt)
 		3'h0: i_ssel_dec = m0_ssel_dec;
@@ -577,6 +595,7 @@ assign m0_ssel_dec[4] = (m0_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s4_addr);
 assign m0_ssel_dec[5] = (m0_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s5_addr);
 assign m0_ssel_dec[6] = (m0_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s6_addr);
 assign m0_ssel_dec[7] = (m0_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s7_addr);
+assign m0_ssel_dec[8] = (m0_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s8_addr);
 
 assign m1_ssel_dec[0] = (m1_adr_i[`aw -2 : `aw -1 - s0_addr_w ] == s0_addr);
 assign m1_ssel_dec[1] = (m1_adr_i[`aw -2 : `aw -1 - s1_addr_w ] == s1_addr);
@@ -586,6 +605,7 @@ assign m1_ssel_dec[4] = (m1_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s4_addr);
 assign m1_ssel_dec[5] = (m1_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s5_addr);
 assign m1_ssel_dec[6] = (m1_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s6_addr);
 assign m1_ssel_dec[7] = (m1_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s7_addr);
+assign m1_ssel_dec[8] = (m1_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s8_addr);
 
 assign m2_ssel_dec[0] = (m2_adr_i[`aw -2 : `aw -1 - s0_addr_w ] == s0_addr);
 assign m2_ssel_dec[1] = (m2_adr_i[`aw -2 : `aw -1 - s1_addr_w ] == s1_addr);
@@ -595,6 +615,7 @@ assign m2_ssel_dec[4] = (m2_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s4_addr);
 assign m2_ssel_dec[5] = (m2_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s5_addr);
 assign m2_ssel_dec[6] = (m2_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s6_addr);
 assign m2_ssel_dec[7] = (m2_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s7_addr);
+assign m2_ssel_dec[8] = (m2_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s8_addr);
 
 assign m3_ssel_dec[0] = (m3_adr_i[`aw -2 : `aw -1 - s0_addr_w ] == s0_addr);
 assign m3_ssel_dec[1] = (m3_adr_i[`aw -2 : `aw -1 - s1_addr_w ] == s1_addr);
@@ -604,6 +625,7 @@ assign m3_ssel_dec[4] = (m3_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s4_addr);
 assign m3_ssel_dec[5] = (m3_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s5_addr);
 assign m3_ssel_dec[6] = (m3_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s6_addr);
 assign m3_ssel_dec[7] = (m3_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s7_addr);
+assign m3_ssel_dec[8] = (m3_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s8_addr);
 
 assign m4_ssel_dec[0] = (m4_adr_i[`aw -2 : `aw -1 - s0_addr_w ] == s0_addr);
 assign m4_ssel_dec[1] = (m4_adr_i[`aw -2 : `aw -1 - s1_addr_w ] == s1_addr);
@@ -613,6 +635,7 @@ assign m4_ssel_dec[4] = (m4_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s4_addr);
 assign m4_ssel_dec[5] = (m4_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s5_addr);
 assign m4_ssel_dec[6] = (m4_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s6_addr);
 assign m4_ssel_dec[7] = (m4_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s7_addr);
+assign m4_ssel_dec[8] = (m4_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s8_addr);
 
 assign m5_ssel_dec[0] = (m5_adr_i[`aw -2 : `aw -1 - s0_addr_w ] == s0_addr);
 assign m5_ssel_dec[1] = (m5_adr_i[`aw -2 : `aw -1 - s1_addr_w ] == s1_addr);
@@ -622,6 +645,7 @@ assign m5_ssel_dec[4] = (m5_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s4_addr);
 assign m5_ssel_dec[5] = (m5_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s5_addr);
 assign m5_ssel_dec[6] = (m5_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s6_addr);
 assign m5_ssel_dec[7] = (m5_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s7_addr);
+assign m5_ssel_dec[8] = (m5_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s8_addr);
 
 assign m6_ssel_dec[0] = (m6_adr_i[`aw -2 : `aw -1 - s0_addr_w ] == s0_addr);
 assign m6_ssel_dec[1] = (m6_adr_i[`aw -2 : `aw -1 - s1_addr_w ] == s1_addr);
@@ -631,6 +655,7 @@ assign m6_ssel_dec[4] = (m6_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s4_addr);
 assign m6_ssel_dec[5] = (m6_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s5_addr);
 assign m6_ssel_dec[6] = (m6_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s6_addr);
 assign m6_ssel_dec[7] = (m6_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s7_addr);
+assign m6_ssel_dec[8] = (m6_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s8_addr);
 
 assign m7_ssel_dec[0] = (m7_adr_i[`aw -2 : `aw -1 - s0_addr_w ] == s0_addr);
 assign m7_ssel_dec[1] = (m7_adr_i[`aw -2 : `aw -1 - s1_addr_w ] == s1_addr);
@@ -640,15 +665,7 @@ assign m7_ssel_dec[4] = (m7_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s4_addr);
 assign m7_ssel_dec[5] = (m7_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s5_addr);
 assign m7_ssel_dec[6] = (m7_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s6_addr);
 assign m7_ssel_dec[7] = (m7_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s7_addr);
-
-//assign i_ssel_dec[0] = (i_bus_m[`mbusw -1 : `mbusw - s0_addr_w ] == s0_addr);
-//assign i_ssel_dec[1] = (i_bus_m[`mbusw -1 : `mbusw - s1_addr_w ] == s1_addr);
-//assign i_ssel_dec[2] = (i_bus_m[`mbusw -1 : `mbusw - s27_addr_w ] == s2_addr);
-//assign i_ssel_dec[3] = (i_bus_m[`mbusw -1 : `mbusw - s27_addr_w ] == s3_addr);
-//assign i_ssel_dec[4] = (i_bus_m[`mbusw -1 : `mbusw - s27_addr_w ] == s4_addr);
-//assign i_ssel_dec[5] = (i_bus_m[`mbusw -1 : `mbusw - s27_addr_w ] == s5_addr);
-//assign i_ssel_dec[6] = (i_bus_m[`mbusw -1 : `mbusw - s27_addr_w ] == s6_addr);
-//assign i_ssel_dec[7] = (i_bus_m[`mbusw -1 : `mbusw - s27_addr_w ] == s7_addr);
+assign m7_ssel_dec[8] = (m7_adr_i[`aw -2 : `aw -1 - s27_addr_w ] == s8_addr);
 
 
 endmodule

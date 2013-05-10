@@ -149,7 +149,7 @@ module graphic_card #(
 		end	
 	end
 	 
-	// rest card if system reset or vga disabled
+	// reset card if system reset or vga disabled
 	assign gc_rst = rst | ~status_register[0];
 
 endmodule

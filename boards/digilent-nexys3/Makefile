@@ -70,7 +70,8 @@ SRC=                                      \
 	../../rtl/ethmac/trunk/rtl/verilog/xilinx_dist_ram_16x32.v \
 	../../rtl/wb_graphic_card/graphic_card.v \
 	../../rtl/wb_graphic_card/display_monitor.v \
-	../../rtl/wb_graphic_card/vga_controller.v  
+	../../rtl/wb_graphic_card/vga_controller.v  \
+	../../rtl/wb_mmu/wb_mmu.v
 
 
 #	../../rtl/wb_uart/uart.v              \

@@ -21,10 +21,6 @@
 #define BUFF_SIZE 256
 
 
-typedef struct {
-   volatile unsigned int ucr;
-   volatile unsigned int rxtx;
-} uart_t;
 
 
 
@@ -43,6 +39,10 @@ public:
 	static void printfln ( const char * format, ... );
 
 private:
+	typedef struct {
+	   volatile unsigned int ucr;
+	   volatile unsigned int rxtx;
+	} uart_t;
 	static int print(const char *format, va_list args );
 	static int prints(const char *string, int width, int pad);
 	static int printi(int i, int b, int sg, int width, int pad, int letbase);

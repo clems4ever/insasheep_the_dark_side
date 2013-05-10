@@ -9,8 +9,10 @@ CFLAGS=-MMD -O0 -Wall -s -fomit-frame-pointer -mbarrel-shift-enabled -mmultiply-
 LDFLAGS=-nostdlib -nodefaultlibs -Tlinker.ld 
 SEGMENTS = -j .text -j .rodata -j .data 
 
+ASM=false
+
 OBJECTS=	crt0.o \
-			test.o \
+			gcc.o \
 			main.o \
 			kernel.o \
 			event_queue.o \
@@ -18,12 +20,14 @@ OBJECTS=	crt0.o \
 			uart_event.o \
 			heap.o \
 			uart.o \
-			string.o \
-			terminal.o \
 			flash.o \
 			tools.o \
 			interruptions.o \
-			exceptions.o 
+			exceptions.o \
+			timer.o \
+			scheduler.o \
+			task.o \
+			vga.o \
 
 
 all: kernel.bin 
@@ -49,7 +53,12 @@ kernel.bin: kernel
 %.o:%.c
 	$(LM32_CPP) $(CFLAGS) -c $< 
 	$(LM32_CPP) -S $< 
+	
+
+doc:
+	doxygen config.doxy 
+
 
 clean:
-	rm -f kernel kernel.bin kernel.lst kernel.map *.o *.d *.asm *.s
+	rm -rf kernel kernel.bin kernel.lst kernel.map *.o *.d *.asm *.s html/ latex/
 

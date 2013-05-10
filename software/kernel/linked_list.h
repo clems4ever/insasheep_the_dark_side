@@ -1,23 +1,43 @@
 
+
+/**
+* \file linked_list.h"
+*
+* \author Cl�ment MICHAUD
+* \brief Data structure linked list
+*/
+
 #ifndef _LINKED_LIST_H
 #define _LINKED_LIST_H
 
 #define NULL 0
 
+/**
+* \class LinkedList linked_list.h
+*
+* \brief Data structure that represents a double linked list
+*
+* \details This data structure is made of instances of a structure called Node that stores the value of the node, the pointer to the next and the previous node.
+*/
 
 template<typename T>
 class LinkedList
 {
 		public:
-
+				/*
+				* \struct Node
+				* \brief Stores the value of the node, the pointer to the next Node and the prvious Node
+				*/
 				struct Node
 				{
-						Node *next;
-						Node *prev;
-						T value;
+						Node *next; /** Pointer to the next node */
+						Node *prev; /** Pointer to the last node */
+						T value; /** Value to store */
 				};
 
-
+				/**
+				* Constructor
+				*/
 				LinkedList();
 				~LinkedList();
 
@@ -29,17 +49,13 @@ class LinkedList
 				void deleteFirstItem(const T& item, const int pos=0);
 				void deleteAllItem(const T& item, const int pos=0);
 
-				//T& at(const int pos);
 				T takeAt(const int pos);
 				T takeFirst();
 				T takeLast();
 
-				// Renvoie le dernier élément de la liste
 				const T& last() const;
-				// Renvoie le premier élément de la liste
 				const T& first() const;
 
-				// Renvoie vrai si l'élément value se trouve dans la liste à partir du rang pos
 				bool contains(const T& value, const int pos = 0) const;
 
 				int size() const { return vsize; }
@@ -50,10 +66,19 @@ class LinkedList
 				T& at(const int pos) const;
 
 		protected:
-				Node *createNode(const T& data, Node *prev = 0, Node *next = 0)
+				/**
+				* \param item is the value that will be stored in the node
+				* \param prev is the pointer to the previous node
+				* \param next is the pointer to the next node
+				*
+				*	\brief Creates a node and initializes.
+				*	\details Creates the nodei by allocating memory.
+				*
+				*/
+				Node *createNode(const T& item, Node *prev = 0, Node *next = 0)
 				{
 						Node *n = new Node;
-						n->value = data;
+						n->value = item;
 						n->prev = prev;
 						n->next = next;
 						return n;
@@ -62,16 +87,23 @@ class LinkedList
 				void destroyNode(Node *node);
 
 
-				// Variables
+				/** Size of the linked list, the number of nodes */
 				int vsize;
+				/** Pointer to the first node */
 				Node *firstNode;
+				/** Pointer to the last node */
 				Node *lastNode;
 };
 
 
 
 
-
+/**
+* Constructor
+* \brief initialize the header of the linked list.
+*
+* \details At the beginning the linked list is empty. The pointer to the first node and last node are empty. The size is 0.
+*/
 template<class T>
 LinkedList<T>::LinkedList()
 {
@@ -80,6 +112,11 @@ LinkedList<T>::LinkedList()
 		vsize = 0;
 }
 
+/**
+* Destructor
+*
+* \brief Clear all allocated memory
+*/
 template<class T>
 LinkedList<T>::~LinkedList()
 {
@@ -88,7 +125,11 @@ LinkedList<T>::~LinkedList()
 
 
 
-//private
+/**
+* \param node is the node that will be destroyed
+*
+* \details Destroys the node \a node, frees the memory and updates the pointers of the linked list
+*/
 template<typename T>
 void LinkedList<T>::destroyNode(Node *node)
 {
@@ -126,6 +167,10 @@ void LinkedList<T>::destroyNode(Node *node)
 }
 
 
+/**
+* \brief Clears the linked list.
+* \details Removes each node in the linked list, frees the memory and reset the linked list header, that is, set the first node pointer and last node pointer to NULL and set size to 0.
+*/
 template<class T>
 void LinkedList<T>::clear()
 {
@@ -142,7 +187,14 @@ void LinkedList<T>::clear()
 		lastNode = NULL;
 }
 
-// Supprime la première occurence de item à partir de la position pos
+
+/**
+*	\param item is the item that is to be destroyed
+*	\param pos is the pos from which the functions will search for the item to destroy
+*
+*	\brief Deletes the first occurence of item in the linked list
+*  \details Removes the first occurence of \a item after the position \a pos.
+*/
 template<class T>
 void LinkedList<T>::deleteFirstItem(const T& item, const int pos)
 {
@@ -165,6 +217,15 @@ void LinkedList<T>::deleteFirstItem(const T& item, const int pos)
 		}
 }
 
+
+
+/**
+*	\param item is the item that is to be destroyed
+*	\param pos is the pos from which the functions will search for the item to destroy
+*
+*	\brief Deletes the first occurence of item in the linked list
+*  \details Removes the first occurence of \a item after the position \a pos.
+*/
 template<class T>
 void LinkedList<T>::deleteAllItem(const T& item, const int pos)
 {
@@ -183,7 +244,12 @@ void LinkedList<T>::deleteAllItem(const T& item, const int pos)
 		}
 }
 
-
+/**
+*	\param item is the item that is to be added at the end of the linked list
+*  \brief Adds an element with value \a item at the end of the list
+*
+* \details Creates the node associated to \a item and puts it at the end of the linked list. 
+*/
 template<class T>
 void LinkedList<T>::addLast(const T& item)
 {
@@ -204,6 +270,12 @@ void LinkedList<T>::addLast(const T& item)
 }
 
 
+/**
+*	\param item is the item that is to be added at the beginning of the linked list
+*  \brief Adds an element with value \a item at the beginning of the list
+*
+* \details Creates the node associated to \a item and puts it at the beginning of the linked list. 
+*/
 template<class T>
 void LinkedList<T>::addFirst(const T& item)
 {
@@ -220,7 +292,12 @@ void LinkedList<T>::addFirst(const T& item)
 		vsize++;
 }
 
-
+/**
+* \param pos is the position of the element that is to be returned.
+* \brief Gets the element at the positon \a pos.
+*
+* \details returns the element at the position \a pos if this element exists, that is if pos does not exceed the size of the linked list.
+*/
 template<class T>
 T& LinkedList<T>::at(const int pos) const
 {
@@ -231,6 +308,13 @@ T& LinkedList<T>::at(const int pos) const
 		return node->value;
 }
 
+
+/**
+* \param pos is the position of the element that is to be returned.
+* \brief Gets the element at the positon \a pos and removes it from the linked list.
+*
+* \details returns the element at the position \a pos if this element exists, that is if pos does not exceed the size of the linked list and removes it from the linked list.
+*/
 template<class T>
 T LinkedList<T>::takeAt(const int pos)
 {
@@ -254,6 +338,11 @@ T LinkedList<T>::takeAt(const int pos)
 }
 
 
+/**
+* \brief Gets the last element and removes it from the linked list.
+*
+* \details returns the last element if this element exists, that is if the linked list is not empty and removes it.
+*/
 template<class T>
 T LinkedList<T>::takeLast()
 {
@@ -266,6 +355,11 @@ T LinkedList<T>::takeLast()
 }
 
 
+/**
+* \brief Gets the first element and removes it from the linked list.
+*
+* \details returns the first element if this element exists, that is if the linked list is not empty and removes it.
+*/
 template<class T>
 T LinkedList<T>::takeFirst()
 {
@@ -277,23 +371,10 @@ T LinkedList<T>::takeFirst()
 		return out;
 }
 
-
-/*template<class T>
-  void LinkedList<T>::print()
-  {
-  std::cout << "first=" << firstNode << "\tlast=" << lastNode << "\n";
-  std::cout << vsize << "\n";
-
-  Node *aux = firstNode;
-  while(aux != 0)
-  {
-  std::cout << "addr=" << aux << "\n";
-  std::cout << "val=" << aux->value << "\n";
-  std::cout << "prev=" << aux->prev << "\tnext=" << aux->next << "\n\n";
-  aux = aux->next;
-  }
-  }*/
-
+/**
+*
+*
+*/
 template<class T>
 bool LinkedList<T>::contains(const T& value, const int pos) const
 {
@@ -311,12 +392,21 @@ bool LinkedList<T>::contains(const T& value, const int pos) const
 }
 
 
+/**
+* \brief Gets the last element of the linked list but does not remove it.
+* \return the last element of the linked list.
+*/
 template<class T>
 const T& LinkedList<T>::last() const
 {
 		return (lastNode->value);
 }
 
+
+/**
+* \brief Gets the first element of the linked list but does not remove it.
+* \return the first element of the linked list.
+*/
 template<class T>
 const T& LinkedList<T>::first() const
 {
