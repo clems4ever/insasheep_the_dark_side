@@ -60,8 +60,4 @@ void Kernel::loop()
 
 
 
-void Kernel::pushEvent(Event *e)
-{
-	Kernel::m_event_queue.push(e);
-}
 
