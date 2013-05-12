@@ -8,7 +8,7 @@ module system
 #(
 	// ADDED clems_maul
 	// Voici notre firmware 
-	parameter   bootram_file     = "../../software/firmware/insa_firmware/image.ram",
+	parameter   bootram_file     = "../../firmware/insa_firmware/image.ram",
 	// END ADDED
 	
 	parameter   clk_freq         = 100000000,
