@@ -4,7 +4,7 @@
 #include "uart.h"
 #include "constant.h"
 
-timer_t *Timer::m_timer0 = (timer_t *)  0xF0010000;
+Timer::timer_t *Timer::m_timer0 = (timer_t *)  0xF0010000;
 
 
 void Timer::installTimer0()

@@ -5,7 +5,7 @@
 
 // Video Ram map
 char *vram;
-vga_t *Vga::m_vga = (vga_t*) 0xF0030000;
+Vga::vga_t *Vga::m_vga = (vga_t*) 0xF0030000;
 
 
 void Vga::disable()

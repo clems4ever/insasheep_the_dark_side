@@ -3,7 +3,7 @@
 #include "uart.h"
 
 
-uart_t* Uart::uart0 = (uart_t*)0x70000000;
+Uart::uart_t* Uart::uart0 = (uart_t*)0x70000000;
 
 
 char buffer[BUFF_SIZE];
