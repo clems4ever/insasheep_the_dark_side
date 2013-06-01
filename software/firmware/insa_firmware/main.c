@@ -31,7 +31,7 @@ int main(int argc, char **argv)
 
 		uart_init();
 
-		uart_putstr("INSoC bootstrap...\r\n");
+		uart_putstr("*** INSAFirmware ***\r\n");
 		uart_putstr("Waiting for the bootloader, load it through the serial port\r\n\n");
 
 		uart_putstr("Waiting for the address where the bootloader will be loaded\r\n");

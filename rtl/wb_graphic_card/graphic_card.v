@@ -128,7 +128,7 @@ module graphic_card #(
 	always @(posedge rst or posedge clk_100MHz)
 	begin	
 		if(rst) begin
-			status_register <= 1;
+			status_register <= 0;
 			map_address <= map_base_address;
 		end else begin
 			if(wb_s_rd) begin // If read
