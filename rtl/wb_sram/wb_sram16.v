@@ -46,6 +46,7 @@ assign sram_dat = wdat_oe ? wdat : 16'bz;
 
 // Latency countdown
 reg  [4:0] lcount;
+reg [3:0] adr_offset; // Usefull in page read mode
 
 //----------------------------------------------------------------------------
 // State Machine
@@ -56,6 +57,7 @@ parameter s_read2  = 2;
 parameter s_write1 = 3;
 parameter s_write2 = 4;
 parameter s_write3 = 5;
+parameter s_page_read1 = 6;
 
 reg [2:0] state;
 
@@ -69,16 +71,24 @@ begin
 		case (state)
 		s_idle: begin
 			wb_ack_o <= 0;
+			adr_offset <=  0;
 
 			if (wb_rd) begin
 				sram_ce_n  <=  0;
 				sram_oe_n  <=  0;
 				sram_we_n  <=  1;
-				sram_adr   <=  adr1;
 				sram_be_n  <=  2'b00;
 				wdat_oe    <=  0;
-				lcount     <=  latency;
-				state      <=  s_read1;
+				if(~page_mode) begin
+					lcount     <=  latency;
+					state      <=  s_read1;
+					sram_adr   <=  adr1;
+				end else begin
+					lcount     <=  5;
+					state      <=  s_page_read1;
+					sram_adr   <=  {adr1[adr_width-1:4], adr_offset};
+				end
+
 			end else if (wb_wr) begin
 				sram_ce_n  <=  0;
 				sram_oe_n  <=  1;
@@ -154,6 +164,28 @@ begin
 				sram_we_n  <=  1;
 				wdat_oe    <=  0;
 				state      <=  s_idle;
+			end
+		end
+		s_page_read1: begin
+			if (lcount != 0) begin
+				lcount     <= lcount - 1;
+			end else begin
+				wb_dat_o[15:0] <= sram_dat;
+				sram_ce_n  <=  0;
+				sram_oe_n  <=  0;
+				sram_we_n  <=  1;
+				sram_adr   <=  {adr1[adr_width-1:4], adr_offset};
+				adr_offset <= adr_offset + 1; // Increment addr    
+				sram_be_n  <=  2'b00;
+				wdat_oe    <=  0;
+				wb_ack_o   <=  1; // ACK during 16 cycles 
+				// If page read done then goto next state
+				if(adr_offset == 15) begin
+					state      <=  s_idle;
+					sram_ce_n  <=  1;
+					sram_oe_n  <=  1;
+					sram_we_n  <=  1;
+				end	
 			end
 		end
 		endcase

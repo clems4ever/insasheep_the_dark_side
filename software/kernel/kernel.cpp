@@ -17,6 +17,7 @@ Scheduler Kernel::m_scheduler;
 void Kernel::initialize()
 {
 	Timer::installTimer0();	
+	asm("scall");
 }
 
 void Kernel::loop()
