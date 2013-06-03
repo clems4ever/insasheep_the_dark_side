@@ -490,7 +490,7 @@ wire sram_we_n;
 wire sram_oe_n;
 
 wb_sram16 #(
-	.adr_width(  23  ),
+	.adr_width(  24  ),
 	.latency(   5   )				//7 may be better - 10ns clock cycle, RAM has 70ns access time
 ) sram0 (
 	.clk(         clk           ),
@@ -505,7 +505,7 @@ wb_sram16 #(
 	.wb_sel_i(    sram0_sel     ),
 	.wb_ack_o(    sram0_ack     ),
 	// SRAM
-	.sram_adr(    sram_adr[22:0]       ),
+	.sram_adr(    sram_adr[23:0]       ),
 	.sram_dat(    sram_d               ),
 	.sram_be_n(   sram_be_n            ),
 	.sram_ce_n(   sram_ce_n         ),
@@ -513,7 +513,7 @@ wb_sram16 #(
 	.sram_we_n(   sram_we_n         )
 );
 
-assign sram_adr[25:23] = 3'b000;
+assign sram_adr[25:24] = 2'b00;
 assign sram_lb = sram_be_n[0];
 assign sram_ub = sram_be_n[1];
 

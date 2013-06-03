@@ -51,7 +51,7 @@ module display_monitor(
 	endfunction
 
 
-	parameter buffer_size = 32;
+	parameter buffer_size = 64;
 	 
 	reg [log2(buffer_size)-1:0] buffer_write_ptr;
 	reg [log2(buffer_size)-1:0] buffer_mem_ptr;
@@ -79,15 +79,18 @@ module display_monitor(
 	end
 	
 	
-		// All vga clocks
-	always @(posedge rst or posedge vga_clk)
+	// All vga clocks
+	// READ process, reads buffered pixels
+	always @(posedge rst or posedge vga_clk or posedge frame)
 	begin
-		if(rst) begin // RESET ALL
+		if(rst || frame) begin // RESET ALL
 			buffer_read_ptr <= 0;
-			next_display_pixel <= 0;
+			// Set the first pixel to be displayed, in the next frame
+			next_display_pixel <= first_display_offset * buffer_size;
 			data_read <= 1'b0;
 		end else 
 		begin
+			// If pixels are displayable, transmits the buffered pixel to the VGA controller
 			if(display) begin
 				buffer_read_ptr <= buffer_read_ptr + 1;
 				if(buffer_read_ptr == buffer_size-1) begin
@@ -100,20 +103,14 @@ module display_monitor(
 			// Data read set for 1 vga clk
 			if(data_read)
 				data_read <= 1'b0;
-			
-			if(frame) begin
-				next_display_pixel <= first_display_offset * buffer_size;
-				data_read <= 1'b1;
-				buffer_read_ptr <= 0;
-			end
 		end	
 	end
 
 
-	// Get all bytes to fill the buffer
+	// Get all bytes to fill the buffer, BUFFERIZATION
 	always @(posedge rst or posedge clk)
 	begin
-		if(rst) begin			
+		if(rst || frame) begin			
 			gc_cyc_o <= 1'b0;
 			gc_stb_o <= 1'b0;
 			buffer_write_ptr <= 0;
@@ -138,19 +135,17 @@ module display_monitor(
 					buffer[buffer_write_ptr+5] <= gc_dat_i[22:20];
 					buffer[buffer_write_ptr+6] <= gc_dat_i[26:24];
 					buffer[buffer_write_ptr+7] <= gc_dat_i[30:28];*/
-					
+
 					buffer_write_ptr <= buffer_write_ptr + 4;
 					buffer_mem_ptr <= buffer_mem_ptr + 2;
-					
-					if(buffer_write_ptr == buffer_size - 8) begin
-						data_ready <= 1'b1;
-						buffer_write_ptr <= 0;
-						buffer_mem_ptr <= 0;
-					end
 						
 					gc_stb_o <= 1'b0;
 					gc_cyc_o <= 1'b0;
-				end //else
+				end else begin
+					buffer_write_ptr <= 0;
+					buffer_mem_ptr <= 0;
+					data_ready <= 1'b1;
+				end	
 			end // Buffer authorized	
 		end				
 	end
@@ -163,7 +158,7 @@ module display_monitor(
 	
 	// Wishbone part that does not change
 	assign gc_adr_o = monitor_base_address + (next_display_pixel >> 1) + buffer_mem_ptr;
-	assign gc_sel_o = 4'b1111; // 32 bits transfer
+	assign gc_sel_o = 4'b0011; // 32 bits transfer
 	assign gc_we_o = 1'b0; // READ memory
 	
 	// Display the pixel color
